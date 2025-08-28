@@ -62,11 +62,11 @@ bool read_games_dir(const char* games_dir, Games *games) {
       const char *f = *it;
       if (streq(dir, ".") || streq(dir, "..")) continue;
       Nob_String_View f_sv = nob_sv_from_cstr(f);
-#ifdef _WIN32
+      #ifdef _WIN32
       if (!nob_sv_end_with(f_sv, ".exe")) continue;
-#else
+      #else
       if (!nob_sv_end_with(f_sv, ".x86_64") && !nob_sv_end_with(f_sv, ".sh")) continue;
-#endif // _WIN32
+      #endif // _WIN32
 
       Nob_String_Builder dir_sb = {0};
       nob_sb_append_buf(&dir_sb, sb.items, sb.count);
@@ -152,7 +152,7 @@ int main(int argc, const char **argv) {
       return 1;
     } else {
       nob_log(NOB_INFO, "Loading default dir: %s\n", games_dir);
-        }
+    }
   }
 
   const char *home_dir = get_home_path();
@@ -180,15 +180,15 @@ int main(int argc, const char **argv) {
   nob_log(NOB_INFO, "Initialized window (%d, %d)\n", WIDTH, (int)HEIGHT);
 
   while (!WindowShouldClose()) {
-		if (processes.count > 0) {
+    if (processes.count > 0) {
       if (!nob_procs_wait_and_reset(&processes)) {
         // I don't care if the game process stays a zombie, we don't crash ma boi
         nob_log(NOB_ERROR, "Failure happened while waiting for item");
         processes.count = 0;
       } else {
         nob_log(NOB_INFO, "Succesfully closed out of game");
-			}
-		}
+      }
+    }
 
     BeginDrawing();
     ClearBackground(RGB(12, 12, 12));
@@ -214,38 +214,38 @@ int main(int argc, const char **argv) {
       int width = MeasureText(name, font_size);
 
       Rectangle game_bounds = {
-    x, y,
-    MAX(base_game_bounds_size, width + PADDING*2), base_game_bounds_size
+	x, y,
+	MAX(base_game_bounds_size, width + PADDING*2), base_game_bounds_size
       };
       if (game_bounds.x > bounds.x + PADDING/2 && game_bounds.x + game_bounds.width > bounds.x + bounds.width) {
-    x = bounds.x + PADDING;
-    y += base_game_bounds_size + PADDING;
-    game_bounds.x = x;
-    game_bounds.y = y;
+	x = bounds.x + PADDING;
+	y += base_game_bounds_size + PADDING;
+	game_bounds.x = x;
+	game_bounds.y = y;
       }
 
       Color bg_color;
       if (CheckCollisionPointRec(mouse, game_bounds)) {
-    hovering_any = true;
-    SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-    bg_color = RGB(80, 80, 80);
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      size_t save = nob_temp_save();
-#ifdef _WIN32
-      const char *game_cmd = nob_temp_sprintf("%s%c%s", it->folder, PATH_DELIM, it->exe);
-#else
-      const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, it->exe);
-#endif // _WIN32
-      nob_cmd_append(&cmd, game_cmd);
-      if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = it->folder)) {
-        nob_log(NOB_ERROR, "Failed to fork process to open game: %s", it->name);
+	hovering_any = true;
+	SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+	bg_color = RGB(80, 80, 80);
+	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+	  size_t save = nob_temp_save();
+	  #ifdef _WIN32
+	  const char *game_cmd = nob_temp_sprintf("%s%c%s", it->folder, PATH_DELIM, it->exe);
+	  #else
+	  const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, it->exe);
+	  #endif // _WIN32
+	  nob_cmd_append(&cmd, game_cmd);
+	  if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = it->folder)) {
+            nob_log(NOB_ERROR, "Failed to fork process to open game: %s", it->name);
+	  } else {
+            nob_log(NOB_INFO, "Launched: %s", it->name);
+	  }
+	  nob_temp_rewind(save);
+	}
       } else {
-        nob_log(NOB_INFO, "Launched: %s", it->name);
-      }
-      nob_temp_rewind(save);
-    }
-      } else {
-    bg_color = RGB(54, 54, 54);
+	bg_color = RGB(54, 54, 54);
       }
       DrawRectangleRounded(game_bounds, 0.05f, 4, bg_color);
       DrawRectangleRoundedLines(game_bounds, 0.05f, 4, RGB(200, 100, 150));
@@ -257,8 +257,8 @@ int main(int argc, const char **argv) {
 
       x += game_bounds.width + PADDING;
       if (x + base_game_bounds_size >= bounds.x + bounds.width) {
-    x = bounds.x + PADDING;
-    y += base_game_bounds_size + PADDING;
+	x = bounds.x + PADDING;
+	y += base_game_bounds_size + PADDING;
       }
     }
 

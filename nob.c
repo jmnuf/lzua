@@ -60,13 +60,12 @@ int main(int argc, char **argv) {
     if (default_dir) {
       cmd_append(&cmd, temp_sprintf("-DDEFAULT_DIRECTORY=\"%s\"", default_dir));
     }
+    cmd_append(&cmd, CC_INCLUDE_FLAG"./lib/raylib-5.5/include/");
     #ifdef _WIN32
-    nob_cc_inputs(&cmd, "./lib/raylib-5.5_win32_msvc16/lib/raylib.lib");
+    nob_cc_inputs(&cmd, "./lib/raylib-5.5/win32-msvc16/raylib.lib");
     nob_cc_inputs(&cmd, "opengl32.lib", "msvcrt.lib", "kernel32.lib", "user32.lib", "winmm.lib", "gdi32.lib", "shell32.lib");
-    cmd_append(&cmd, CC_INCLUDE_FLAG"./lib/raylib-5.5_win32_msvc16/include/");
     #else
-    nob_cc_inputs(&cmd, "./lib/raylib-5.5_linux_amd64/lib/libraylib.a");
-    cmd_append(&cmd, CC_INCLUDE_FLAG"./lib/raylib-5.5_linux_amd64/include/");
+    nob_cc_inputs(&cmd, "./lib/raylib-5.5/linux-amd64/libraylib.a");
     cmd_append(&cmd, "-lm");
     #endif
 

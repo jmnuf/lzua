@@ -13,7 +13,7 @@
 #define RGB(r, g, b) RGBa((r), (g), (b), 255)
 
 #define WIDTH 600
-#define HEIGHT (WIDTH/16.0*9)
+#define HEIGHT ((int)(WIDTH/16.0*9))
 
 #define streq(a, b) (strcmp((a), (b)) == 0)
 #define MAX(a, b) ((b) < (a) ? (a) : (b))
@@ -62,7 +62,11 @@ bool read_games_dir(const char* games_dir, Games *games) {
       const char *f = *it;
       if (streq(dir, ".") || streq(dir, "..")) continue;
       Nob_String_View f_sv = nob_sv_from_cstr(f);
+#ifdef _WIN32
+      if (!nob_sv_end_with(f_sv, ".exe")) continue;
+#else
       if (!nob_sv_end_with(f_sv, ".x86_64") && !nob_sv_end_with(f_sv, ".sh")) continue;
+#endif // _WIN32
 
       Nob_String_Builder dir_sb = {0};
       nob_sb_append_buf(&dir_sb, sb.items, sb.count);
@@ -71,9 +75,9 @@ bool read_games_dir(const char* games_dir, Games *games) {
       nob_sb_append_null(&dir_sb);
 
       nob_da_append(games, ((Game) {
-	.folder = dir_sb.items,
-	.name = strdup(dir),
-	.exe = strdup(f),
+        .folder = dir_sb.items,
+        .name = strdup(dir),
+        .exe = strdup(f),
       }));
     }
 
@@ -146,7 +150,9 @@ int main(int argc, const char **argv) {
     if (!games_dir) {
       nob_log(NOB_ERROR, "Must pass in the folder of the folders of executables");
       return 1;
-    }
+    } else {
+      nob_log(NOB_INFO, "Loading default dir: %s\n", games_dir);
+        }
   }
 
   const char *home_dir = get_home_path();
@@ -174,20 +180,25 @@ int main(int argc, const char **argv) {
   nob_log(NOB_INFO, "Initialized window (%d, %d)\n", WIDTH, (int)HEIGHT);
 
   while (!WindowShouldClose()) {
-    if (!nob_procs_wait_and_reset(&processes)) {
-      // I don't care if the game process stays a zombie, we don't crash ma boi
-      nob_log(NOB_ERROR, "Failure happened while waiting for item");
-      processes.count = 0;
-    }
+		if (processes.count > 0) {
+      if (!nob_procs_wait_and_reset(&processes)) {
+        // I don't care if the game process stays a zombie, we don't crash ma boi
+        nob_log(NOB_ERROR, "Failure happened while waiting for item");
+        processes.count = 0;
+      } else {
+        nob_log(NOB_INFO, "Succesfully closed out of game");
+			}
+		}
 
     BeginDrawing();
     ClearBackground(RGB(12, 12, 12));
     #define PADDING 10
+    #define PADDINGf ((float)(PADDING))
 
     Rectangle bounds = {
       .x = PADDING, .y = PADDING,
-      .width = GetScreenWidth() - PADDING*2,
-      .height = GetScreenHeight() - PADDING*2,
+      .width = GetScreenWidth() - PADDINGf*2,
+      .height = GetScreenHeight() - PADDINGf*2,
     };
     DrawRectangleRec(bounds, RGB(16, 16, 16));
 
@@ -203,47 +214,51 @@ int main(int argc, const char **argv) {
       int width = MeasureText(name, font_size);
 
       Rectangle game_bounds = {
-	x, y,
-	MAX(base_game_bounds_size, width + PADDING*2), base_game_bounds_size
+    x, y,
+    MAX(base_game_bounds_size, width + PADDING*2), base_game_bounds_size
       };
       if (game_bounds.x > bounds.x + PADDING/2 && game_bounds.x + game_bounds.width > bounds.x + bounds.width) {
-	x = bounds.x + PADDING;
-	y += base_game_bounds_size + PADDING;
-	game_bounds.x = x;
-	game_bounds.y = y;
+    x = bounds.x + PADDING;
+    y += base_game_bounds_size + PADDING;
+    game_bounds.x = x;
+    game_bounds.y = y;
       }
 
       Color bg_color;
       if (CheckCollisionPointRec(mouse, game_bounds)) {
-	hovering_any = true;
-	SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-	bg_color = RGB(80, 80, 80);
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-	  size_t save = nob_temp_save();
-	  const char *game_cmd = nob_temp_sprintf("./%s", it->exe);
-	  nob_cmd_append(&cmd, game_cmd);
-	  if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = it->folder)) {
-	    nob_log(NOB_ERROR, "Failed to fork process to open game: %s", it->name);
-	  } else {
-	    nob_log(NOB_INFO, "Launched: %s", it->name);
-	  }
-	  nob_temp_rewind(save);
-	}
+    hovering_any = true;
+    SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+    bg_color = RGB(80, 80, 80);
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      size_t save = nob_temp_save();
+#ifdef _WIN32
+      const char *game_cmd = nob_temp_sprintf("%s%c%s", it->folder, PATH_DELIM, it->exe);
+#else
+      const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, it->exe);
+#endif // _WIN32
+      nob_cmd_append(&cmd, game_cmd);
+      if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = it->folder)) {
+        nob_log(NOB_ERROR, "Failed to fork process to open game: %s", it->name);
       } else {
-	bg_color = RGB(54, 54, 54);
+        nob_log(NOB_INFO, "Launched: %s", it->name);
       }
-      DrawRectangleRounded(game_bounds, 0.05, 4, bg_color);
-      DrawRectangleRoundedLines(game_bounds, 0.05, 4, RGB(200, 100, 150));
+      nob_temp_rewind(save);
+    }
+      } else {
+    bg_color = RGB(54, 54, 54);
+      }
+      DrawRectangleRounded(game_bounds, 0.05f, 4, bg_color);
+      DrawRectangleRoundedLines(game_bounds, 0.05f, 4, RGB(200, 100, 150));
 
 
-      int text_x = game_bounds.x + (game_bounds.width / 2.0 - width / 2.0);
-      int text_y = game_bounds.y + game_bounds.height / 2.0;
+      int text_x = (int) (game_bounds.x + (game_bounds.width / 2.0 - width / 2.0));
+      int text_y = (int)(game_bounds.y + game_bounds.height / 2.0);
       DrawText(it->name, text_x, text_y, font_size, RGB(200, 180, 200));
 
       x += game_bounds.width + PADDING;
       if (x + base_game_bounds_size >= bounds.x + bounds.width) {
-	x = bounds.x + PADDING;
-	y += base_game_bounds_size + PADDING;
+    x = bounds.x + PADDING;
+    y += base_game_bounds_size + PADDING;
       }
     }
 

@@ -1,4 +1,5 @@
 build/
 nob
 *.exe
+*.obj
 *.old

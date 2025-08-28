@@ -4,6 +4,12 @@
 
 #define BUILD_FOLDER "./build"
 
+#ifdef _WIN32
+#  define CC_INCLUDE_FLAG "/I"
+#else
+#  define CC_INCLUDE_FLAG "-I"
+#endif // _WIN32
+
 #define streq(a, b) (strcmp(a, b) == 0)
 
 void usage(const char *program) {
@@ -51,13 +57,21 @@ int main(int argc, char **argv) {
     nob_cc_flags(&cmd);
     nob_cc_output(&cmd, output_path);
     nob_cc_inputs(&cmd, "main.c");
-    nob_cc_inputs(&cmd, "./lib/raylib-5.5_linux_amd64/lib/libraylib.a");
-    cmd_append(&cmd, "-I""./lib/raylib-5.5_linux_amd64/include/");
     if (default_dir) {
       cmd_append(&cmd, temp_sprintf("-DDEFAULT_DIRECTORY=\"%s\"", default_dir));
     }
+#ifdef _WIN32
+    nob_cc_inputs(&cmd, "./lib/raylib-5.5_win32_msvc16/lib/raylib.lib");
+		nob_cc_inputs(&cmd, "opengl32.lib", "msvcrt.lib", "kernel32.lib", "user32.lib", "winmm.lib", "gdi32.lib", "shell32.lib");
+    cmd_append(&cmd, CC_INCLUDE_FLAG"./lib/raylib-5.5_win32_msvc16/include/");
+#else
+    nob_cc_inputs(&cmd, "./lib/raylib-5.5_linux_amd64/lib/libraylib.a");
+    cmd_append(&cmd, CC_INCLUDE_FLAG"./lib/raylib-5.5_linux_amd64/include/");
     cmd_append(&cmd, "-lm");
+#endif
+
     if (!cmd_run(&cmd)) return 1;
+		nob_log(INFO, "Built succesfully");
   }
 
   if (run_requested) {

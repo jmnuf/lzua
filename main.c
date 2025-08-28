@@ -12,7 +12,10 @@
 #define RGBa(r, g, b, a) ((Color) { (r), (g), (b), (a) })
 #define RGB(r, g, b) RGBa((r), (g), (b), 255)
 
-#define WIDTH 600
+#define MIN_WIDTH 600
+#define MIN_HEIGHT ((int)(MIN_WIDTH/16.0*9))
+
+#define WIDTH 800
 #define HEIGHT ((int)(WIDTH/16.0*9))
 
 #define streq(a, b) (strcmp((a), (b)) == 0)
@@ -22,7 +25,18 @@
 #  define DEFAULT_DIRECTORY NULL
 #endif
 
-typedef struct { int x, y; } Vector2i;
+#define List(T) \
+struct { \
+  T *items; \
+  size_t count; \
+  size_t capacity; \
+}
+
+typedef enum {
+  BUTTON_STATE_NONE  = 0x00,
+  BUTTON_STATE_HOVER = 0x01,
+  BUTTON_STATE_CLICK = 0x10,
+} Button_State;
 
 typedef struct {
   const char *folder;
@@ -30,11 +44,15 @@ typedef struct {
   const char *exe;
 } Game;
 
+typedef List(Game) Games;
+
 typedef struct {
-  Game *items;
-  size_t count;
-  size_t capacity;
-} Games;
+  Game data;
+  float x, y;
+  float width, height;
+  int title_width;
+} GameButton;
+
 
 bool read_games_dir(const char* games_dir, Games *games) {
   bool result = true;
@@ -123,6 +141,82 @@ char *get_home_path() {
   #endif // _WIN32
 }
 
+
+#define GENERAL_PADDING 10.0f
+
+#define GAME_BUTTON_HEIGHT 100.0f
+#define GAME_BUTTON_FONT_SIZE 20
+#define GAME_BUTTON_BASE_COLOR RGB(54, 54, 54)
+#define GAME_BUTTON_HOVR_COLOR RGB(80, 80, 80)
+#define GAME_BUTTON_PICK_COLOR RGB(180, 80, 80)
+
+void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton *buttons) {
+  memset(buttons, 0, sizeof(GameButton) * games.count);
+
+  for (size_t i = 0; i < games.count; ++i) {
+    int text_width = MeasureText(games.items[i].name, GAME_BUTTON_FONT_SIZE);
+    buttons[i].data = games.items[i];
+    buttons[i].width = MAX(GAME_BUTTON_HEIGHT, text_width + GENERAL_PADDING*2);
+    buttons[i].height = GAME_BUTTON_HEIGHT;
+    buttons[i].title_width = text_width;
+  }
+
+  GameButton *row[games.count];
+  size_t last_i = 0;
+
+  float bounds_width = bounds.width - bounds.x - GENERAL_PADDING*2;
+  float y = bounds.y + GENERAL_PADDING;
+  while (last_i < games.count) {
+    float row_width = 0;
+    size_t row_sz = 0;
+    memset(row, 0, sizeof(row));
+
+    for (size_t i = last_i; i < games.count; ++i) {
+      if (row_sz == 0) {
+	row[row_sz++] = &buttons[i];
+	row_width = buttons[i].width;
+	continue;
+      }
+      GameButton gb = buttons[i];
+      float alusive_width = row_width + GENERAL_PADDING + gb.width;
+      if (alusive_width >= bounds_width) break;
+      row[row_sz++] = &buttons[i];
+      row_width = alusive_width;
+    }
+
+    float x = bounds.x + GENERAL_PADDING + (bounds_width/2.0 - row_width/2.0);
+    for (size_t i = 0; i < row_sz; ++i) {
+      row[i]->x = x;
+      row[i]->y = y;
+      x += row[i]->width + GENERAL_PADDING;
+    }
+    
+    last_i += row_sz;
+    y += GAME_BUTTON_HEIGHT + GENERAL_PADDING;
+  }
+}
+
+Button_State game_button(GameButton *gb) {
+  Rectangle bounds = { .x = gb->x, .y = gb->y, .width = gb->width, .height = GAME_BUTTON_HEIGHT };
+  Button_State state = BUTTON_STATE_NONE;
+  if (CheckCollisionPointRec(GetMousePosition(), bounds)) {
+    state = state | BUTTON_STATE_HOVER;
+    DrawRectangleRounded(bounds, 0.05f, 4, GAME_BUTTON_HOVR_COLOR);
+
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      state = state | BUTTON_STATE_CLICK;
+    }
+  } else {
+    DrawRectangleRounded(bounds, 0.05f, 4, GAME_BUTTON_BASE_COLOR);
+  }
+  DrawRectangleRoundedLines(bounds, 0.05f, 4, RGB(200, 100, 150));
+  int text_x = (int) (bounds.x + (bounds.width / 2.0 - gb->title_width / 2.0));
+  int text_y = (int)(bounds.y + bounds.height / 2.0);
+  DrawText(gb->data.name, text_x, text_y, GAME_BUTTON_FONT_SIZE, RGB(200, 180, 200));
+  return state;
+}
+
+
 int main(int argc, const char **argv) {
   const char *program = nob_shift(argv, argc);
   (void) program;
@@ -175,9 +269,12 @@ int main(int argc, const char **argv) {
 
   SetTraceLogLevel(LOG_WARNING);
   InitWindow(WIDTH, HEIGHT, "Lzua");
-  SetWindowMinSize(WIDTH, HEIGHT);
+  SetWindowMinSize(MIN_WIDTH, MIN_HEIGHT);
 
-  nob_log(NOB_INFO, "Initialized window (%d, %d)\n", WIDTH, (int)HEIGHT);
+  nob_log(NOB_INFO, "Initialized window (%d, %d)", WIDTH, HEIGHT);
+
+  MouseCursor cursor = MOUSE_CURSOR_DEFAULT;
+  SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 
   while (!WindowShouldClose()) {
     if (processes.count > 0) {
@@ -192,78 +289,50 @@ int main(int argc, const char **argv) {
 
     BeginDrawing();
     ClearBackground(RGB(12, 12, 12));
-    #define PADDING 10
-    #define PADDINGf ((float)(PADDING))
 
     Rectangle bounds = {
-      .x = PADDING, .y = PADDING,
-      .width = GetScreenWidth() - PADDINGf*2,
-      .height = GetScreenHeight() - PADDINGf*2,
+      .x = GENERAL_PADDING, .y = GENERAL_PADDING,
+      .width = GetScreenWidth() - GENERAL_PADDING*2,
+      .height = GetScreenHeight() - GENERAL_PADDING*2,
     };
     DrawRectangleRec(bounds, RGB(16, 16, 16));
 
-    float base_game_bounds_size = 100;
-    int font_size = 5;
-    float x = bounds.x + PADDING;
-    float y = bounds.y + PADDING;
-    Vector2 mouse = GetMousePosition();
+    GameButton buttons[games.count];
+
+    calculate_game_buttons_positions(bounds, games, buttons);
+
     bool hovering_any = false;
-
-    nob_da_foreach(Game, it, &games) {
-      const char *name = it->name;
-      int width = MeasureText(name, font_size);
-
-      Rectangle game_bounds = {
-	x, y,
-	MAX(base_game_bounds_size, width + PADDING*2), base_game_bounds_size
-      };
-      if (game_bounds.x > bounds.x + PADDING/2 && game_bounds.x + game_bounds.width > bounds.x + bounds.width) {
-	x = bounds.x + PADDING;
-	y += base_game_bounds_size + PADDING;
-	game_bounds.x = x;
-	game_bounds.y = y;
-      }
-
-      Color bg_color;
-      if (CheckCollisionPointRec(mouse, game_bounds)) {
+    bool consumed = false;
+    for (GameButton *gb = buttons; gb < buttons + games.count; ++gb) {
+      Button_State btn_state = game_button(gb);
+      if (btn_state & BUTTON_STATE_HOVER) {
 	hovering_any = true;
-	SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-	bg_color = RGB(80, 80, 80);
-	if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-	  size_t save = nob_temp_save();
-	  #ifdef _WIN32
-	  const char *game_cmd = nob_temp_sprintf("%s%c%s", it->folder, PATH_DELIM, it->exe);
-	  #else
-	  const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, it->exe);
-	  #endif // _WIN32
-	  nob_cmd_append(&cmd, game_cmd);
-	  if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = it->folder)) {
-            nob_log(NOB_ERROR, "Failed to fork process to open game: %s", it->name);
-	  } else {
-            nob_log(NOB_INFO, "Launched: %s", it->name);
-	  }
-	  nob_temp_rewind(save);
+	if (cursor != MOUSE_CURSOR_POINTING_HAND) {
+	  cursor = MOUSE_CURSOR_POINTING_HAND;
+	  SetMouseCursor(cursor);
 	}
-      } else {
-	bg_color = RGB(54, 54, 54);
       }
-      DrawRectangleRounded(game_bounds, 0.05f, 4, bg_color);
-      DrawRectangleRoundedLines(game_bounds, 0.05f, 4, RGB(200, 100, 150));
-
-
-      int text_x = (int) (game_bounds.x + (game_bounds.width / 2.0 - width / 2.0));
-      int text_y = (int)(game_bounds.y + game_bounds.height / 2.0);
-      DrawText(it->name, text_x, text_y, font_size, RGB(200, 180, 200));
-
-      x += game_bounds.width + PADDING;
-      if (x + base_game_bounds_size >= bounds.x + bounds.width) {
-	x = bounds.x + PADDING;
-	y += base_game_bounds_size + PADDING;
+      if (btn_state & BUTTON_STATE_CLICK && !consumed) {
+	consumed = true;
+	size_t save = nob_temp_save();
+	#ifdef _WIN32
+	const char *game_cmd = nob_temp_sprintf("%s%c%s", gb->data.folder, PATH_DELIM, gb->data.exe);
+	#else
+	const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, gb->data.exe);
+	#endif // _WIN32
+	nob_cmd_append(&cmd, game_cmd);
+	if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = gb->data.folder)) {
+          nob_log(NOB_ERROR, "Failed to fork process to open game: %s", gb->data.name);
+	} else {
+          nob_log(NOB_INFO, "Launched: %s", gb->data.name);
+	}
+	nob_temp_rewind(save);
       }
     }
 
-    if (!hovering_any) {
-      SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+    if (!hovering_any && cursor != MOUSE_CURSOR_DEFAULT) {
+      cursor = MOUSE_CURSOR_DEFAULT;
+      SetMouseCursor(cursor);
     }
 
     EndDrawing();

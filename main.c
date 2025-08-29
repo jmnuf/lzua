@@ -74,7 +74,7 @@ bool read_games_dir(const char* games_dir, Games *games) {
     Nob_File_Paths files = {0};
     const char *path = nob_temp_sprintf("%s%c%s", games_dir, PATH_DELIM, dir);
     if (nob_get_file_type(path) != NOB_FILE_DIRECTORY) continue;
-    
+
     if (!nob_read_entire_dir(path, &files)) nob_return_defer(false);
     nob_da_foreach(const char *, it, &files) {
       const char *f = *it;
@@ -162,6 +162,7 @@ void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton 
   }
   if (games.count == 0) return;
 
+  size_t save = nob_temp_save();
   GameButton **row = nob_temp_alloc(sizeof(GameButton*)*games.count);
   size_t last_i = 0;
 
@@ -174,10 +175,11 @@ void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton 
 
     for (size_t i = last_i; i < games.count; ++i) {
       if (row_sz == 0) {
-	row[row_sz++] = &buttons[i];
-	row_width = buttons[i].width;
-	continue;
+        row[row_sz++] = &buttons[i];
+        row_width = buttons[i].width;
+        continue;
       }
+
       GameButton gb = buttons[i];
       float alusive_width = row_width + GENERAL_PADDING + gb.width;
       if (alusive_width >= bounds_width) break;
@@ -191,10 +193,12 @@ void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton 
       row[i]->y = y;
       x += row[i]->width + GENERAL_PADDING;
     }
-    
+
     last_i += row_sz;
     y += GAME_BUTTON_HEIGHT + GENERAL_PADDING;
   }
+
+  nob_temp_rewind(save);
 }
 
 Button_State game_button(GameButton *gb) {
@@ -264,6 +268,7 @@ int main(int argc, const char **argv) {
   };
   Games games = {0};
   if (!read_games_dir(games_dir, &games)) return 1;
+  GameButton *buttons = nob_temp_alloc(sizeof(GameButton)*games.count);
 
 
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
@@ -298,8 +303,6 @@ int main(int argc, const char **argv) {
     };
     DrawRectangleRec(bounds, RGB(16, 16, 16));
 
-    GameButton *buttons = nob_temp_alloc(sizeof(GameButton)*games.count);
-
     calculate_game_buttons_positions(bounds, games, buttons);
 
     bool hovering_any = false;
@@ -307,27 +310,27 @@ int main(int argc, const char **argv) {
     for (GameButton *gb = buttons; gb < buttons + games.count; ++gb) {
       Button_State btn_state = game_button(gb);
       if (btn_state & BUTTON_STATE_HOVER) {
-	hovering_any = true;
-	if (cursor != MOUSE_CURSOR_POINTING_HAND) {
-	  cursor = MOUSE_CURSOR_POINTING_HAND;
-	  SetMouseCursor(cursor);
-	}
+        hovering_any = true;
+        if (cursor != MOUSE_CURSOR_POINTING_HAND) {
+          cursor = MOUSE_CURSOR_POINTING_HAND;
+          SetMouseCursor(cursor);
+        }
       }
       if (btn_state & BUTTON_STATE_CLICK && !consumed) {
-	consumed = true;
-	size_t save = nob_temp_save();
-	#ifdef _WIN32
-	const char *game_cmd = nob_temp_sprintf("%s%c%s", gb->data.folder, PATH_DELIM, gb->data.exe);
-	#else
-	const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, gb->data.exe);
-	#endif // _WIN32
-	nob_cmd_append(&cmd, game_cmd);
-	if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = gb->data.folder)) {
+        consumed = true;
+        size_t save = nob_temp_save();
+        #ifdef _WIN32
+        const char *game_cmd = nob_temp_sprintf("%s%c%s", gb->data.folder, PATH_DELIM, gb->data.exe);
+        #else
+        const char *game_cmd = nob_temp_sprintf(".%c%s", PATH_DELIM, gb->data.exe);
+        #endif // _WIN32
+        nob_cmd_append(&cmd, game_cmd);
+        if (!nob_cmd_run(&cmd, .async = &processes, .cwd_path = gb->data.folder)) {
           nob_log(NOB_ERROR, "Failed to fork process to open game: %s", gb->data.name);
-	} else {
+        } else {
           nob_log(NOB_INFO, "Launched: %s", gb->data.name);
-	}
-	nob_temp_rewind(save);
+        }
+        nob_temp_rewind(save);
       }
     }
 
@@ -340,7 +343,6 @@ int main(int argc, const char **argv) {
   }
 
   CloseWindow();
-  
+
   return 0;
 }
-

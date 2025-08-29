@@ -3,3 +3,8 @@ nob
 *.exe
 *.obj
 *.old
+
+.vs/
+.vscode/
+*.pdb
+

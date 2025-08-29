@@ -1,0 +1,1836 @@
+
+main.c,1159
+#define NOB_IMPLEMENTATION2,2
+#  define PATH_DELIM 6,65
+#  define PATH_DELIM 8,99
+#define RGBa(12,166
+#define RGB(13,225
+#define MIN_WIDTH 15,274
+#define MIN_HEIGHT 16,297
+#define WIDTH 18,345
+#define HEIGHT 19,364
+#define streq(21,404
+#define MAX(22,449
+#  define DEFAULT_DIRECTORY 25,521
+#define List(28,565
+  BUTTON_STATE_NONE 36,673
+  BUTTON_STATE_HOVER 37,703
+  BUTTON_STATE_CLICK 38,733
+} Button_State;39,763
+  const char *folder;folder42,800
+  const char *name;name43,823
+  const char *exe;exe44,844
+} Game;45,864
+typedef List(Game)47,875
+  Game data;50,922
+  float x,51,936
+  float x, y;51,936
+  float width,52,951
+  float width, height;52,951
+  int title_width;53,975
+} GameButton;54,995
+bool read_games_dir(57,1014
+void usage(117,2831
+char *get_home_path(get_home_path121,2924
+#define GENERAL_PADDING 145,3519
+#define GAME_BUTTON_HEIGHT 147,3552
+#define GAME_BUTTON_FONT_SIZE 148,3587
+#define GAME_BUTTON_BASE_COLOR 149,3621
+#define GAME_BUTTON_HOVR_COLOR 150,3669
+#define GAME_BUTTON_PICK_COLOR 151,3717
+void calculate_game_buttons_positions(153,3768
+Button_State game_button(204,5421
+int main(225,6284
+
+nob.h,11589
+#define NOB_H_100,4457
+#define _CRT_SECURE_NO_WARNINGS 102,4488
+#define NOBDEF110,4762
+#define NOB_ASSERT 115,4842
+#define NOB_REALLOC 120,4938
+#define NOB_FREE 125,5034
+#            define NOB_DEPRECATED(131,5191
+#            define NOB_DEPRECATED(133,5306
+#            define NOB_DEPRECATED(135,5398
+#    define NOB_DEPRECATED(139,5495
+#    define WIN32_LEAN_AND_MEAN154,5787
+#    define _WINUSER_155,5820
+#    define _WINGDI_156,5843
+#    define _IMM_157,5865
+#    define _WINCON_158,5884
+#    define NOB_LINE_END 171,6147
+#    define NOB_LINE_END 173,6187
+#        define NOB_PRINTF_FORMAT(179,6383
+#        define NOB_PRINTF_FORMAT(181,6538
+#    define NOB_PRINTF_FORMAT(185,6760
+#define NOB_UNUSED(188,6831
+#define NOB_TODO(189,6872
+#define NOB_UNREACHABLE(190,6991
+#define NOB_ARRAY_LEN(192,7126
+#define NOB_ARRAY_GET(193,7189
+    NOB_INFO,197,7324
+    NOB_WARNING,198,7339
+    NOB_ERROR,199,7357
+    NOB_NO_LOGS,200,7373
+} Nob_Log_Level;201,7391
+NOBDEF void nob_log(206,7546
+#define nob_shift(210,7785
+#define nob_shift_args(215,8178
+    const char **items;items218,8258
+    size_t count;219,8283
+    size_t capacity;220,8302
+} Nob_File_Paths;221,8324
+    NOB_FILE_REGULAR 224,8361
+    NOB_FILE_DIRECTORY,225,8388
+    NOB_FILE_SYMLINK,226,8413
+    NOB_FILE_OTHER,227,8436
+} Nob_File_Type;228,8457
+#define nob_return_defer(238,8968
+#define NOB_DA_INIT_CAP 242,9114
+#define NOB_DECLTYPE_CAST(246,9173
+#define NOB_DECLTYPE_CAST(248,9224
+#define nob_da_reserve(251,9279
+#define nob_da_append(266,10494
+#define nob_da_free(272,10713
+#define nob_da_append_many(275,10805
+#define nob_da_resize(282,11319
+#define nob_da_last(288,11510
+#define nob_da_remove_unordered(289,11593
+#define nob_da_foreach(317,12468
+    char *items;items320,12593
+    size_t count;321,12611
+    size_t capacity;322,12630
+} Nob_String_Builder;323,12652
+NOBDEF int nob_sb_appendf(326,12754
+#define nob_sb_append_buf(329,12900
+#define nob_sb_append_cstr(332,13034
+#define nob_sb_append_null(341,13379
+#define nob_sb_free(344,13493
+typedef HANDLE Nob_Proc;348,13575
+#define NOB_INVALID_PROC 349,13601
+typedef HANDLE Nob_Fd;350,13648
+#define NOB_INVALID_FD 351,13672
+typedef int Nob_Proc;353,13724
+#define NOB_INVALID_PROC 354,13747
+typedef int Nob_Fd;355,13778
+#define NOB_INVALID_FD 356,13799
+    Nob_Proc *items;items364,14017
+    size_t count;365,14039
+    size_t capacity;366,14058
+} Nob_Procs;367,14080
+NOB_DEPRECATED(379,14429
+    const char **items;items388,14973
+    size_t count;389,14998
+    size_t capacity;390,15017
+} Nob_Cmd;391,15039
+    Nob_Procs *async;async396,15209
+    size_t max_procs;398,15313
+    const char *stdin_path;stdin_path400,15367
+    const char *stdout_path;stdout_path402,15428
+    const char *stderr_path;stderr_path404,15490
+    const char *cwd_path;cwd_path407,15564
+} Nob_Cmd_Opt;408,15591
+#define NOB_NANOS_PER_SEC 416,15783
+#define nob_cmd_run(423,16129
+    Nob_Fd *fdin;fdin450,16914
+    Nob_Fd *fdout;fdout451,16933
+    Nob_Fd *fderr;fderr452,16953
+} Nob_Cmd_Redirect;453,16973
+#define nob_cmd_append(460,17278
+#define nob_cmd_extend(466,17542
+#define nob_cmd_free(470,17710
+NOB_DEPRECATED(473,17790
+#define NOB_TEMP_CAPACITY 524,20492
+#       define nob_cc(573,22844
+#       define nob_cc(575,22928
+#       define nob_cc(577,23014
+#    define nob_cc(580,23093
+#    define nob_cc_flags(586,23244
+#    define nob_cc_flags(588,23351
+#    define nob_cc_output(594,23530
+#    define nob_cc_output(596,23647
+#  define nob_cc_inputs(601,23793
+#       define NOB_REBUILD_URSELF(613,24477
+#       define NOB_REBUILD_URSELF(615,24606
+#       define NOB_REBUILD_URSELF(617,24736
+#    define NOB_REBUILD_URSELF(620,24883
+#define NOB_GO_REBUILD_URSELF(647,26076
+#define NOB_GO_REBUILD_URSELF_PLUS(663,26646
+    size_t count;666,26784
+    const char *data;data667,26803
+} Nob_String_View;668,26826
+#define nob_sb_to_sv(683,27678
+#define SV_Fmt 687,27798
+#define SV_Arg(690,27855
+#define WIN32_LEAN_AND_MEAN741,30092
+struct dirent744,30145
+    char d_name[d_name746,30163
+typedef struct DIR DIR;749,30199
+Nob_Log_Level nob_minimal_log_level 777,31283
+#define NOB_WIN32_ERR_MSG_SIZE 786,31668
+NOBDEF char *nob_win32_error_message(nob_win32_error_message789,31747
+NOBDEF void nob__go_rebuild_urself(820,32848
+static size_t nob_temp_size 873,34757
+static char nob_temp[nob_temp874,34791
+NOBDEF bool nob_mkdir_if_not_exists(876,34841
+NOBDEF bool nob_copy_file(896,35363
+NOBDEF void nob_cmd_render(958,37266
+static void nob__win32_cmd_quote(976,37911
+NOBDEF int nob_nprocs(1017,39410
+NOBDEF bool nob_cmd_run_opt(1028,39624
+NOBDEF uint64_t nob_nanos_since_unspecified_epoch(1086,41550
+NOBDEF Nob_Proc nob_cmd_run_async_redirect(1108,42183
+static Nob_Proc nob__cmd_start_process(1113,42369
+NOBDEF Nob_Proc nob_cmd_run_async(1204,45690
+NOBDEF Nob_Proc nob_cmd_run_async_and_reset(1209,45811
+NOBDEF Nob_Proc nob_cmd_run_async_redirect_and_reset(1216,45992
+NOBDEF Nob_Fd nob_fd_open_for_read(1235,46586
+NOBDEF Nob_Fd nob_fd_open_for_write(1268,47594
+NOBDEF void nob_fd_close(1303,48908
+NOBDEF bool nob_procs_wait(1312,49031
+NOBDEF bool nob_procs_flush(1321,49247
+NOBDEF bool nob_procs_wait_and_reset(1328,49390
+NOBDEF bool nob_proc_wait(1333,49490
+static int nob__proc_wait_async(1390,51093
+NOBDEF bool nob_procs_append_with_flush(1462,52962
+NOBDEF bool nob_cmd_run_sync_redirect(1473,53226
+NOBDEF bool nob_cmd_run_sync(1479,53443
+NOBDEF bool nob_cmd_run_sync_and_reset(1485,53595
+NOBDEF bool nob_cmd_run_sync_redirect_and_reset(1492,53780
+NOBDEF void nob_log(1511,54378
+NOBDEF bool nob_read_entire_dir(1537,54966
+NOBDEF bool nob_write_entire_file(1574,56054
+NOBDEF Nob_File_Type nob_get_file_type(1607,56859
+NOBDEF bool nob_delete_file(1633,57795
+NOBDEF bool nob_copy_directory_recursively(1651,58283
+NOBDEF char *nob_temp_strdup(nob_temp_strdup1715,60460
+NOBDEF void *nob_temp_alloc(nob_temp_alloc1725,60734
+NOBDEF char *nob_temp_sprintf(nob_temp_sprintf1735,61068
+NOBDEF void nob_temp_reset(1753,61580
+NOBDEF size_t nob_temp_save(1758,61646
+NOBDEF void nob_temp_rewind(1763,61716
+NOBDEF const char *nob_temp_sv_to_cstr(nob_temp_sv_to_cstr1768,61805
+NOBDEF int nob_needs_rebuild(1777,62101
+NOBDEF int nob_needs_rebuild1(1845,65036
+NOBDEF const char *nob_path_name(nob_path_name1850,65184
+NOBDEF bool nob_rename(1863,65565
+NOBDEF bool nob_read_entire_file(1880,66160
+NOBDEF int nob_sb_appendf(1917,67327
+NOBDEF Nob_String_View nob_sv_chop_by_delim(1939,68006
+NOBDEF Nob_String_View nob_sv_chop_left(1959,68431
+NOBDEF Nob_String_View nob_sv_from_parts(1973,68698
+NOBDEF Nob_String_View nob_sv_trim_left(1981,68865
+NOBDEF Nob_String_View nob_sv_trim_right(1991,69088
+NOBDEF Nob_String_View nob_sv_trim(2001,69323
+NOBDEF Nob_String_View nob_sv_from_cstr(2006,69440
+NOBDEF bool nob_sv_eq(2011,69558
+NOBDEF bool nob_sv_end_with(2020,69756
+NOBDEF bool nob_sv_starts_with(2032,70141
+NOBDEF int nob_file_exists(2046,70589
+NOBDEF const char *nob_get_current_dir_temp(nob_get_current_dir_temp2063,71094
+NOBDEF bool nob_set_current_dir(2090,71935
+struct DIR2109,72534
+    HANDLE hFind;2111,72549
+    WIN32_FIND_DATA data;2112,72568
+    struct dirent *dirent;dirent2113,72595
+NOBDEF DIR *opendir(opendir2116,72629
+NOBDEF struct dirent *readdir(readdir2144,73311
+NOBDEF int closedir(2173,74200
+#define NOB_STRIP_PREFIX_GUARD_2197,74790
+        #define TODO 2205,75389
+        #define UNREACHABLE 2206,75420
+        #define UNUSED 2207,75465
+        #define ARRAY_LEN 2208,75500
+        #define ARRAY_GET 2209,75541
+        #define INFO 2210,75582
+        #define WARNING 2211,75613
+        #define ERROR 2212,75650
+        #define NO_LOGS 2213,75683
+        #define Log_Level 2214,75720
+        #define minimal_log_level 2215,75761
+        #define shift 2219,76059
+        #define shift_args 2220,76092
+        #define File_Paths 2221,76135
+        #define FILE_REGULAR 2222,76178
+        #define FILE_DIRECTORY 2223,76225
+        #define FILE_SYMLINK 2224,76276
+        #define FILE_OTHER 2225,76323
+        #define File_Type 2226,76366
+        #define mkdir_if_not_exists 2227,76407
+        #define copy_file 2228,76468
+        #define copy_directory_recursively 2229,76509
+        #define read_entire_dir 2230,76584
+        #define write_entire_file 2231,76637
+        #define get_file_type 2232,76694
+        #define delete_file 2233,76743
+        #define return_defer 2234,76788
+        #define da_append 2235,76835
+        #define da_free 2236,76876
+        #define da_append_many 2237,76913
+        #define da_resize 2238,76964
+        #define da_reserve 2239,77005
+        #define da_last 2240,77048
+        #define da_remove_unordered 2241,77085
+        #define da_foreach 2242,77146
+        #define String_Builder 2243,77189
+        #define read_entire_file 2244,77240
+        #define sb_appendf 2245,77295
+        #define sb_append_buf 2246,77338
+        #define sb_append_cstr 2247,77387
+        #define sb_append_null 2248,77438
+        #define sb_free 2249,77489
+        #define Proc 2250,77526
+        #define INVALID_PROC 2251,77557
+        #define Fd 2252,77604
+        #define INVALID_FD 2253,77631
+        #define fd_open_for_read 2254,77674
+        #define fd_open_for_write 2255,77729
+        #define fd_close 2256,77786
+        #define Procs 2257,77825
+        #define proc_wait 2258,77858
+        #define procs_wait 2259,77899
+        #define procs_wait_and_reset 2260,77942
+        #define procs_append_with_flush 2261,78005
+        #define procs_flush 2262,78074
+        #define Cmd 2263,78119
+        #define Cmd_Redirect 2264,78148
+        #define Cmd_Opt 2265,78195
+        #define cmd_run_opt 2266,78232
+        #define cmd_run 2267,78277
+        #define cmd_render 2268,78314
+        #define cmd_append 2269,78357
+        #define cmd_extend 2270,78400
+        #define cmd_free 2271,78443
+        #define cmd_run_async 2272,78482
+        #define cmd_run_async_and_reset 2273,78531
+        #define cmd_run_async_redirect 2274,78600
+        #define cmd_run_async_redirect_and_reset 2275,78667
+        #define cmd_run_sync 2276,78754
+        #define cmd_run_sync_and_reset 2277,78801
+        #define cmd_run_sync_redirect 2278,78868
+        #define cmd_run_sync_redirect_and_reset 2279,78933
+        #define temp_strdup 2280,79018
+        #define temp_alloc 2281,79063
+        #define temp_sprintf 2282,79106
+        #define temp_reset 2283,79153
+        #define temp_save 2284,79196
+        #define temp_rewind 2285,79237
+        #define path_name 2286,79282
+        #define needs_rebuild 2289,79453
+        #define needs_rebuild1 2290,79502
+        #define file_exists 2291,79553
+        #define get_current_dir_temp 2292,79598
+        #define set_current_dir 2293,79661
+        #define String_View 2294,79714
+        #define temp_sv_to_cstr 2295,79759
+        #define sv_chop_by_delim 2296,79812
+        #define sv_chop_left 2297,79867
+        #define sv_trim 2298,79914
+        #define sv_trim_left 2299,79951
+        #define sv_trim_right 2300,79998
+        #define sv_eq 2301,80047
+        #define sv_starts_with 2302,80080
+        #define sv_end_with 2303,80131
+        #define sv_from_cstr 2304,80176
+        #define sv_from_parts 2305,80223
+        #define sb_to_sv 2306,80272
+        #define win32_error_message 2307,80311
+        #define nprocs 2308,80372
+        #define nanos_since_unspecified_epoch 2309,80407
+        #define NANOS_PER_SEC 2310,80488
+
+lib/raylib-5.5/include/raylib.h,20913
+#define RAYLIB_H86,5481
+#define RAYLIB_VERSION_MAJOR 90,5585
+#define RAYLIB_VERSION_MINOR 91,5617
+#define RAYLIB_VERSION_PATCH 92,5649
+#define RAYLIB_VERSION 93,5681
+        #define __declspec(100,6037
+        #define RLAPI 103,6138
+        #define RLAPI 105,6290
+        #define RLAPI 109,6458
+    #define RLAPI 114,6614
+    #define PI 121,6922
+    #define DEG2RAD 124,6987
+    #define RAD2DEG 127,7045
+    #define RL_MALLOC(133,7187
+    #define RL_CALLOC(136,7258
+    #define RL_REALLOC(139,7332
+    #define RL_FREE(142,7406
+    #define CLITERAL(149,7701
+    #define CLITERAL(151,7746
+#define RL_COLOR_TYPE165,8408
+#define RL_RECTANGLE_TYPE166,8431
+#define RL_VECTOR2_TYPE167,8458
+#define RL_VECTOR3_TYPE168,8483
+#define RL_VECTOR4_TYPE169,8508
+#define RL_QUATERNION_TYPE170,8533
+#define RL_MATRIX_TYPE171,8561
+#define LIGHTGRAY 175,8687
+#define GRAY 176,8761
+#define DARKGRAY 177,8829
+#define YELLOW 178,8902
+#define GOLD 179,8972
+#define ORANGE 180,9040
+#define PINK 181,9110
+#define RED 182,9178
+#define MAROON 183,9245
+#define GREEN 184,9315
+#define LIME 185,9384
+#define DARKGREEN 186,9452
+#define SKYBLUE 187,9526
+#define BLUE 188,9598
+#define DARKBLUE 189,9666
+#define PURPLE 190,9739
+#define VIOLET 191,9809
+#define DARKPURPLE 192,9879
+#define BEIGE 193,9954
+#define BROWN 194,10023
+#define DARKBROWN 195,10092
+#define WHITE 197,10168
+#define BLACK 198,10237
+#define BLANK 199,10306
+#define MAGENTA 200,10389
+#define RAYWHITE 201,10460
+    typedef enum bool 210,10939
+    typedef enum bool { false 210,10939
+    typedef enum bool { false = 0, true 210,10939
+    typedef enum bool { false = 0, true = !false } bool;210,10939
+    #define RL_BOOL_TYPE211,10997
+typedef struct Vector2 215,11059
+    float x;216,11085
+    float y;217,11136
+} Vector2;218,11187
+typedef struct Vector3 221,11227
+    float x;222,11253
+    float y;223,11304
+    float z;224,11355
+} Vector3;225,11406
+typedef struct Vector4 228,11446
+    float x;229,11472
+    float y;230,11523
+    float z;231,11574
+    float w;232,11625
+} Vector4;233,11676
+typedef Vector4 Quaternion;236,11735
+typedef struct Matrix 239,11835
+    float m0,240,11860
+    float m0, m4,240,11860
+    float m0, m4, m8,240,11860
+    float m0, m4, m8, m12;240,11860
+    float m1,241,11924
+    float m1, m5,241,11924
+    float m1, m5, m9,241,11924
+    float m1, m5, m9, m13;241,11924
+    float m2,242,11989
+    float m2, m6,242,11989
+    float m2, m6, m10,242,11989
+    float m2, m6, m10, m14;242,11989
+    float m3,243,12053
+    float m3, m7,243,12053
+    float m3, m7, m11,243,12053
+    float m3, m7, m11, m15;243,12053
+} Matrix;244,12118
+typedef struct Color 247,12173
+    unsigned char r;248,12197
+    unsigned char g;249,12245
+    unsigned char b;250,12295
+    unsigned char a;251,12344
+} Color;252,12394
+typedef struct Rectangle 255,12434
+    float x;256,12462
+    float y;257,12531
+    float width;258,12600
+    float height;259,12648
+} Rectangle;260,12697
+typedef struct Image 263,12762
+    void *data;data264,12786
+    int width;265,12833
+    int height;266,12882
+    int mipmaps;267,12932
+    int format;268,12992
+} Image;269,13055
+typedef struct Texture 272,13117
+    unsigned int id;273,13143
+    int width;274,13193
+    int height;275,13244
+    int mipmaps;276,13296
+    int format;277,13356
+} Texture;278,13419
+typedef Texture Texture2D;281,13464
+typedef Texture TextureCubemap;284,13530
+typedef struct RenderTexture 287,13610
+    unsigned int id;288,13642
+    Texture texture;289,13703
+    Texture depth;290,13767
+} RenderTexture;291,13831
+typedef RenderTexture RenderTexture2D;294,13894
+typedef struct NPatchInfo 297,13972
+    Rectangle source;298,14001
+    int left;299,14058
+    int top;300,14109
+    int right;301,14159
+    int bottom;302,14211
+    int layout;303,14264
+} NPatchInfo;304,14335
+typedef struct GlyphInfo 307,14395
+    int value;308,14423
+    int offsetX;309,14481
+    int offsetY;310,14545
+    int advanceX;311,14609
+    Image image;312,14670
+} GlyphInfo;313,14723
+typedef struct Font 316,14787
+    int baseSize;317,14810
+    int glyphCount;318,14875
+    int glyphPadding;319,14934
+    Texture2D texture;320,15002
+    Rectangle *recs;recs321,15070
+    GlyphInfo *glyphs;glyphs322,15139
+} Font;323,15188
+typedef struct Camera3D 326,15252
+    Vector3 position;327,15279
+    Vector3 target;328,15327
+    Vector3 up;329,15385
+    float fovy;330,15459
+    int projection;331,15593
+} Camera3D;332,15686
+typedef Camera3D Camera;334,15701
+typedef struct Camera2D 337,15833
+    Vector2 offset;338,15860
+    Vector2 target;339,15933
+    float rotation;340,16006
+    float zoom;341,16065
+} Camera2D;342,16146
+typedef struct Mesh 345,16195
+    int vertexCount;346,16218
+    int triangleCount;347,16286
+    float *vertices;vertices350,16395
+    float *texcoords;texcoords351,16497
+    float *texcoords2;texcoords2352,16609
+    float *normals;normals353,16728
+    float *tangents;tangents354,16829
+    unsigned char *colors;colors355,16932
+    unsigned short *indices;indices356,17037
+    float *animVertices;animVertices359,17156
+    float *animNormals;animNormals360,17244
+    unsigned char *boneIds;boneIds361,17323
+    float *boneWeights;boneWeights362,17457
+    Matrix *boneMatrices;boneMatrices363,17576
+    int boneCount;364,17647
+    unsigned int vaoId;367,17724
+    unsigned int *vboId;vboId368,17786
+} Mesh;369,17872
+typedef struct Shader 372,17894
+    unsigned int id;373,17919
+    int *locs;locs374,17969
+} Shader;375,18050
+typedef struct MaterialMap 378,18079
+    Texture2D texture;379,18109
+    Color color;380,18162
+    float value;381,18213
+} MaterialMap;382,18264
+typedef struct Material 385,18321
+    Shader shader;386,18348
+    MaterialMap *maps;maps387,18396
+    float params[params388,18468
+} Material;389,18542
+typedef struct Transform 392,18599
+    Vector3 translation;393,18627
+    Quaternion rotation;394,18671
+    Vector3 scale;395,18712
+} Transform;396,18750
+typedef struct BoneInfo 399,18800
+    char name[name400,18827
+    int parent;401,18869
+} BoneInfo;402,18913
+typedef struct Model 405,18976
+    Matrix transform;406,19000
+    int meshCount;408,19057
+    int materialCount;409,19106
+    Mesh *meshes;meshes410,19158
+    Material *materials;materials411,19203
+    int *meshMaterial;meshMaterial412,19251
+    int boneCount;415,19329
+    BoneInfo *bones;bones416,19377
+    Transform *bindPose;bindPose417,19438
+} Model;418,19503
+typedef struct ModelAnimation 421,19534
+    int boneCount;422,19567
+    int frameCount;423,19615
+    BoneInfo *bones;bones424,19674
+    Transform **framePoses;framePoses425,19735
+    char name[name426,19788
+} ModelAnimation;427,19835
+typedef struct Ray 430,19884
+    Vector3 position;431,19906
+    Vector3 direction;432,19960
+} Ray;433,20019
+typedef struct RayCollision 436,20067
+    bool hit;437,20098
+    float distance;438,20157
+    Vector3 point;439,20217
+    Vector3 normal;440,20274
+} RayCollision;441,20328
+typedef struct BoundingBox 444,20363
+    Vector3 min;445,20393
+    Vector3 max;446,20451
+} BoundingBox;447,20509
+typedef struct Wave 450,20553
+    unsigned int frameCount;451,20576
+    unsigned int sampleRate;452,20658
+    unsigned int sampleSize;453,20725
+    unsigned int channels;454,20819
+    void *data;data455,20898
+} Wave;456,20954
+typedef struct rAudioBuffer rAudioBuffer;460,21061
+typedef struct rAudioProcessor rAudioProcessor;461,21104
+typedef struct AudioStream 464,21192
+    rAudioBuffer *buffer;buffer465,21222
+    rAudioProcessor *processor;processor466,21308
+    unsigned int sampleRate;468,21407
+    unsigned int sampleSize;469,21474
+    unsigned int channels;470,21568
+} AudioStream;471,21647
+typedef struct Sound 474,21675
+    AudioStream stream;475,21699
+    unsigned int frameCount;476,21748
+} Sound;477,21830
+typedef struct Music 480,21919
+    AudioStream stream;481,21943
+    unsigned int frameCount;482,21992
+    bool looping;483,22074
+    int ctxType;485,22133
+    void *ctxData;ctxData486,22208
+} Music;487,22280
+typedef struct VrDeviceInfo 490,22349
+    int hResolution;491,22380
+    int vResolution;492,22452
+    float hScreenSize;493,22522
+    float vScreenSize;494,22588
+    float eyeToScreenDistance;495,22652
+    float lensSeparationDistance;496,22735
+    float interpupillaryDistance;497,22810
+    float lensDistortionValues[lensDistortionValues498,22890
+    float chromaAbCorrection[chromaAbCorrection499,22966
+} VrDeviceInfo;500,23049
+typedef struct VrStereoConfig 503,23136
+    Matrix projection[projection504,23169
+    Matrix viewOffset[viewOffset505,23242
+    float leftLensCenter[leftLensCenter506,23316
+    float rightLensCenter[rightLensCenter507,23376
+    float leftScreenCenter[leftScreenCenter508,23437
+    float rightScreenCenter[rightScreenCenter509,23499
+    float scale[scale510,23562
+    float scaleIn[scaleIn511,23622
+} VrStereoConfig;512,23685
+typedef struct FilePathList 515,23725
+    unsigned int capacity;516,23756
+    unsigned int count;517,23818
+    char **paths;paths518,23882
+} FilePathList;519,23940
+typedef struct AutomationEvent 522,23980
+    unsigned int frame;523,24014
+    unsigned int type;524,24066
+    int params[params525,24139
+} AutomationEvent;526,24210
+typedef struct AutomationEventList 529,24258
+    unsigned int capacity;530,24296
+    unsigned int count;531,24379
+    AutomationEvent *events;events532,24440
+} AutomationEventList;533,24495
+    FLAG_VSYNC_HINT 542,24869
+    FLAG_FULLSCREEN_MODE 543,24951
+    FLAG_WINDOW_RESIZABLE 544,25032
+    FLAG_WINDOW_UNDECORATED 545,25110
+    FLAG_WINDOW_HIDDEN 546,25211
+    FLAG_WINDOW_MINIMIZED 547,25278
+    FLAG_WINDOW_MAXIMIZED 548,25359
+    FLAG_WINDOW_UNFOCUSED 549,25452
+    FLAG_WINDOW_TOPMOST 550,25526
+    FLAG_WINDOW_ALWAYS_RUN 551,25602
+    FLAG_WINDOW_TRANSPARENT 552,25695
+    FLAG_WINDOW_HIGHDPI 553,25780
+    FLAG_WINDOW_MOUSE_PASSTHROUGH 554,25851
+    FLAG_BORDERLESS_WINDOWED_MODE 555,25981
+    FLAG_MSAA_4X_HINT 556,26080
+    FLAG_INTERLACED_HINT 557,26156
+} ConfigFlags;558,26258
+    LOG_ALL 563,26350
+    LOG_TRACE,564,26395
+    LOG_DEBUG,565,26469
+    LOG_INFO,566,26581
+    LOG_WARNING,567,26655
+    LOG_ERROR,568,26729
+    LOG_FATAL,569,26803
+    LOG_NONE 570,26888
+} TraceLogLevel;571,26932
+    KEY_NULL 577,27099
+    KEY_APOSTROPHE 579,27200
+    KEY_COMMA 580,27247
+    KEY_MINUS 581,27294
+    KEY_PERIOD 582,27341
+    KEY_SLASH 583,27388
+    KEY_ZERO 584,27435
+    KEY_ONE 585,27482
+    KEY_TWO 586,27529
+    KEY_THREE 587,27576
+    KEY_FOUR 588,27623
+    KEY_FIVE 589,27670
+    KEY_SIX 590,27717
+    KEY_SEVEN 591,27764
+    KEY_EIGHT 592,27811
+    KEY_NINE 593,27858
+    KEY_SEMICOLON 594,27905
+    KEY_EQUAL 595,27952
+    KEY_A 596,27999
+    KEY_B 597,28050
+    KEY_C 598,28101
+    KEY_D 599,28152
+    KEY_E 600,28203
+    KEY_F 601,28254
+    KEY_G 602,28305
+    KEY_H 603,28356
+    KEY_I 604,28407
+    KEY_J 605,28458
+    KEY_K 606,28509
+    KEY_L 607,28560
+    KEY_M 608,28611
+    KEY_N 609,28662
+    KEY_O 610,28713
+    KEY_P 611,28764
+    KEY_Q 612,28815
+    KEY_R 613,28866
+    KEY_S 614,28917
+    KEY_T 615,28968
+    KEY_U 616,29019
+    KEY_V 617,29070
+    KEY_W 618,29121
+    KEY_X 619,29172
+    KEY_Y 620,29223
+    KEY_Z 621,29274
+    KEY_LEFT_BRACKET 622,29325
+    KEY_BACKSLASH 623,29372
+    KEY_RIGHT_BRACKET 624,29421
+    KEY_GRAVE 625,29468
+    KEY_SPACE 627,29537
+    KEY_ESCAPE 628,29588
+    KEY_ENTER 629,29637
+    KEY_TAB 630,29688
+    KEY_BACKSPACE 631,29737
+    KEY_INSERT 632,29792
+    KEY_DELETE 633,29841
+    KEY_RIGHT 634,29890
+    KEY_LEFT 635,29948
+    KEY_DOWN 636,30005
+    KEY_UP 637,30062
+    KEY_PAGE_UP 638,30117
+    KEY_PAGE_DOWN 639,30170
+    KEY_HOME 640,30225
+    KEY_END 641,30275
+    KEY_CAPS_LOCK 642,30324
+    KEY_SCROLL_LOCK 643,30379
+    KEY_NUM_LOCK 644,30436
+    KEY_PRINT_SCREEN 645,30490
+    KEY_PAUSE 646,30548
+    KEY_F1 647,30599
+    KEY_F2 648,30647
+    KEY_F3 649,30695
+    KEY_F4 650,30743
+    KEY_F5 651,30791
+    KEY_F6 652,30839
+    KEY_F7 653,30887
+    KEY_F8 654,30935
+    KEY_F9 655,30983
+    KEY_F10 656,31031
+    KEY_F11 657,31080
+    KEY_F12 658,31129
+    KEY_LEFT_SHIFT 659,31178
+    KEY_LEFT_CONTROL 660,31234
+    KEY_LEFT_ALT 661,31292
+    KEY_LEFT_SUPER 662,31346
+    KEY_RIGHT_SHIFT 663,31402
+    KEY_RIGHT_CONTROL 664,31459
+    KEY_RIGHT_ALT 665,31518
+    KEY_RIGHT_SUPER 666,31573
+    KEY_KB_MENU 667,31630
+    KEY_KP_0 669,31703
+    KEY_KP_1 670,31757
+    KEY_KP_2 671,31811
+    KEY_KP_3 672,31865
+    KEY_KP_4 673,31919
+    KEY_KP_5 674,31973
+    KEY_KP_6 675,32027
+    KEY_KP_7 676,32081
+    KEY_KP_8 677,32135
+    KEY_KP_9 678,32189
+    KEY_KP_DECIMAL 679,32243
+    KEY_KP_DIVIDE 680,32297
+    KEY_KP_MULTIPLY 681,32351
+    KEY_KP_SUBTRACT 682,32405
+    KEY_KP_ADD 683,32459
+    KEY_KP_ENTER 684,32513
+    KEY_KP_EQUAL 685,32571
+    KEY_BACK 687,32653
+    KEY_MENU 688,32718
+    KEY_VOLUME_UP 689,32783
+    KEY_VOLUME_DOWN 690,32853
+} KeyboardKey;691,32925
+#define MOUSE_LEFT_BUTTON 694,33004
+#define MOUSE_RIGHT_BUTTON 695,33051
+#define MOUSE_MIDDLE_BUTTON 696,33099
+    MOUSE_BUTTON_LEFT 700,33184
+    MOUSE_BUTTON_RIGHT 701,33242
+    MOUSE_BUTTON_MIDDLE 702,33301
+    MOUSE_BUTTON_SIDE 703,33377
+    MOUSE_BUTTON_EXTRA 704,33459
+    MOUSE_BUTTON_FORWARD 705,33542
+    MOUSE_BUTTON_BACK 706,33627
+} MouseButton;707,33709
+    MOUSE_CURSOR_DEFAULT 711,33760
+    MOUSE_CURSOR_ARROW 712,33826
+    MOUSE_CURSOR_IBEAM 713,33882
+    MOUSE_CURSOR_CROSSHAIR 714,33952
+    MOUSE_CURSOR_POINTING_HAND 715,34008
+    MOUSE_CURSOR_RESIZE_EW 716,34073
+    MOUSE_CURSOR_RESIZE_NS 717,34152
+    MOUSE_CURSOR_RESIZE_NWSE 718,34229
+    MOUSE_CURSOR_RESIZE_NESW 719,34331
+    MOUSE_CURSOR_RESIZE_ALL 720,34437
+    MOUSE_CURSOR_NOT_ALLOWED 721,34526
+} MouseCursor;722,34602
+    GAMEPAD_BUTTON_UNKNOWN 726,34656
+    GAMEPAD_BUTTON_LEFT_FACE_UP,727,34740
+    GAMEPAD_BUTTON_LEFT_FACE_RIGHT,728,34812
+    GAMEPAD_BUTTON_LEFT_FACE_DOWN,729,34887
+    GAMEPAD_BUTTON_LEFT_FACE_LEFT,730,34961
+    GAMEPAD_BUTTON_RIGHT_FACE_UP,731,35035
+    GAMEPAD_BUTTON_RIGHT_FACE_RIGHT,732,35133
+    GAMEPAD_BUTTON_RIGHT_FACE_DOWN,733,35232
+    GAMEPAD_BUTTON_RIGHT_FACE_LEFT,734,35329
+    GAMEPAD_BUTTON_LEFT_TRIGGER_1,735,35427
+    GAMEPAD_BUTTON_LEFT_TRIGGER_2,736,35540
+    GAMEPAD_BUTTON_RIGHT_TRIGGER_1,737,35654
+    GAMEPAD_BUTTON_RIGHT_TRIGGER_2,738,35768
+    GAMEPAD_BUTTON_MIDDLE_LEFT,739,35883
+    GAMEPAD_BUTTON_MIDDLE,740,35979
+    GAMEPAD_BUTTON_MIDDLE_RIGHT,741,36085
+    GAMEPAD_BUTTON_LEFT_THUMB,742,36181
+    GAMEPAD_BUTTON_RIGHT_THUMB 743,36262
+} GamepadButton;744,36344
+    GAMEPAD_AXIS_LEFT_X 748,36397
+    GAMEPAD_AXIS_LEFT_Y 749,36467
+    GAMEPAD_AXIS_RIGHT_X 750,36537
+    GAMEPAD_AXIS_RIGHT_Y 751,36608
+    GAMEPAD_AXIS_LEFT_TRIGGER 752,36679
+    GAMEPAD_AXIS_RIGHT_TRIGGER 753,36774
+} GamepadAxis;754,36870
+    MATERIAL_MAP_ALBEDO 758,36927
+    MATERIAL_MAP_METALNESS,759,37015
+    MATERIAL_MAP_NORMAL,760,37107
+    MATERIAL_MAP_ROUGHNESS,761,37163
+    MATERIAL_MAP_OCCLUSION,762,37222
+    MATERIAL_MAP_EMISSION,763,37289
+    MATERIAL_MAP_HEIGHT,764,37347
+    MATERIAL_MAP_CUBEMAP,765,37406
+    MATERIAL_MAP_IRRADIANCE,766,37496
+    MATERIAL_MAP_PREFILTER,767,37589
+    MATERIAL_MAP_BRDF 768,37681
+} MaterialMapIndex;769,37735
+#define MATERIAL_MAP_DIFFUSE 771,37758
+#define MATERIAL_MAP_SPECULAR 772,37813
+    SHADER_LOC_VERTEX_POSITION 776,37915
+    SHADER_LOC_VERTEX_TEXCOORD01,777,37999
+    SHADER_LOC_VERTEX_TEXCOORD02,778,38085
+    SHADER_LOC_VERTEX_NORMAL,779,38171
+    SHADER_LOC_VERTEX_TANGENT,780,38253
+    SHADER_LOC_VERTEX_COLOR,781,38336
+    SHADER_LOC_MATRIX_MVP,782,38417
+    SHADER_LOC_MATRIX_VIEW,783,38512
+    SHADER_LOC_MATRIX_PROJECTION,784,38609
+    SHADER_LOC_MATRIX_MODEL,785,38693
+    SHADER_LOC_MATRIX_NORMAL,786,38784
+    SHADER_LOC_VECTOR_VIEW,787,38864
+    SHADER_LOC_COLOR_DIFFUSE,788,38942
+    SHADER_LOC_COLOR_SPECULAR,789,39029
+    SHADER_LOC_COLOR_AMBIENT,790,39117
+    SHADER_LOC_MAP_ALBEDO,791,39204
+    SHADER_LOC_MAP_METALNESS,792,39321
+    SHADER_LOC_MAP_NORMAL,793,39442
+    SHADER_LOC_MAP_ROUGHNESS,794,39525
+    SHADER_LOC_MAP_OCCLUSION,795,39611
+    SHADER_LOC_MAP_EMISSION,796,39697
+    SHADER_LOC_MAP_HEIGHT,797,39782
+    SHADER_LOC_MAP_CUBEMAP,798,39865
+    SHADER_LOC_MAP_IRRADIANCE,799,39951
+    SHADER_LOC_MAP_PREFILTER,800,40040
+    SHADER_LOC_MAP_BRDF,801,40128
+    SHADER_LOC_VERTEX_BONEIDS,802,40209
+    SHADER_LOC_VERTEX_BONEWEIGHTS,803,40292
+    SHADER_LOC_BONE_MATRICES 804,40379
+} ShaderLocationIndex;805,40476
+#define SHADER_LOC_MAP_DIFFUSE 807,40502
+#define SHADER_LOC_MAP_SPECULAR 808,40561
+    SHADER_UNIFORM_FLOAT 812,40670
+    SHADER_UNIFORM_VEC2,813,40737
+    SHADER_UNIFORM_VEC3,814,40813
+    SHADER_UNIFORM_VEC4,815,40889
+    SHADER_UNIFORM_INT,816,40965
+    SHADER_UNIFORM_IVEC2,817,41030
+    SHADER_UNIFORM_IVEC3,818,41105
+    SHADER_UNIFORM_IVEC4,819,41180
+    SHADER_UNIFORM_SAMPLER2D 820,41255
+} ShaderUniformDataType;821,41326
+    SHADER_ATTRIB_FLOAT 825,41402
+    SHADER_ATTRIB_VEC2,826,41471
+    SHADER_ATTRIB_VEC3,827,41549
+    SHADER_ATTRIB_VEC4 828,41627
+} ShaderAttributeDataType;829,41705
+    PIXELFORMAT_UNCOMPRESSED_GRAYSCALE 834,41826
+    PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,835,41901
+    PIXELFORMAT_UNCOMPRESSED_R5G6B5,836,41970
+    PIXELFORMAT_UNCOMPRESSED_R8G8B8,837,42025
+    PIXELFORMAT_UNCOMPRESSED_R5G5B5A1,838,42080
+    PIXELFORMAT_UNCOMPRESSED_R4G4B4A4,839,42149
+    PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,840,42218
+    PIXELFORMAT_UNCOMPRESSED_R32,841,42273
+    PIXELFORMAT_UNCOMPRESSED_R32G32B32,842,42348
+    PIXELFORMAT_UNCOMPRESSED_R32G32B32A32,843,42426
+    PIXELFORMAT_UNCOMPRESSED_R16,844,42504
+    PIXELFORMAT_UNCOMPRESSED_R16G16B16,845,42584
+    PIXELFORMAT_UNCOMPRESSED_R16G16B16A16,846,42667
+    PIXELFORMAT_COMPRESSED_DXT1_RGB,847,42750
+    PIXELFORMAT_COMPRESSED_DXT1_RGBA,848,42815
+    PIXELFORMAT_COMPRESSED_DXT3_RGBA,849,42883
+    PIXELFORMAT_COMPRESSED_DXT5_RGBA,850,42937
+    PIXELFORMAT_COMPRESSED_ETC1_RGB,851,42991
+    PIXELFORMAT_COMPRESSED_ETC2_RGB,852,43045
+    PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA,853,43099
+    PIXELFORMAT_COMPRESSED_PVRT_RGB,854,43153
+    PIXELFORMAT_COMPRESSED_PVRT_RGBA,855,43207
+    PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA,856,43261
+    PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA 857,43315
+} PixelFormat;858,43369
+    TEXTURE_FILTER_POINT 864,43580
+    TEXTURE_FILTER_BILINEAR,865,43664
+    TEXTURE_FILTER_TRILINEAR,866,43729
+    TEXTURE_FILTER_ANISOTROPIC_4X,867,43819
+    TEXTURE_FILTER_ANISOTROPIC_8X,868,43892
+    TEXTURE_FILTER_ANISOTROPIC_16X,869,43965
+} TextureFilter;870,44039
+    TEXTURE_WRAP_REPEAT 874,44109
+    TEXTURE_WRAP_CLAMP,875,44187
+    TEXTURE_WRAP_MIRROR_REPEAT,876,44278
+    TEXTURE_WRAP_MIRROR_CLAMP 877,44372
+} TextureWrap;878,44475
+    CUBEMAP_LAYOUT_AUTO_DETECT 882,44529
+    CUBEMAP_LAYOUT_LINE_VERTICAL,883,44610
+    CUBEMAP_LAYOUT_LINE_HORIZONTAL,884,44706
+    CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR,885,44804
+    CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE 886,44904
+} CubemapLayout;887,45003
+    FONT_DEFAULT 891,45080
+    FONT_BITMAP,892,45158
+    FONT_SDF 893,45239
+} FontType;894,45325
+    BLEND_ALPHA 898,45395
+    BLEND_ADDITIVE,899,45478
+    BLEND_MULTIPLIED,900,45547
+    BLEND_ADD_COLORS,901,45621
+    BLEND_SUBTRACT_COLORS,902,45704
+    BLEND_ALPHA_PREMULTIPLY,903,45792
+    BLEND_CUSTOM,904,45879
+    BLEND_CUSTOM_SEPARATE 905,45989
+} BlendMode;906,46126
+    GESTURE_NONE 911,46239
+    GESTURE_TAP 912,46290
+    GESTURE_DOUBLETAP 913,46342
+    GESTURE_HOLD 914,46401
+    GESTURE_DRAG 915,46454
+    GESTURE_SWIPE_RIGHT 916,46507
+    GESTURE_SWIPE_LEFT 917,46567
+    GESTURE_SWIPE_UP 918,46626
+    GESTURE_SWIPE_DOWN 919,46683
+    GESTURE_PINCH_IN 920,46742
+    GESTURE_PINCH_OUT 921,46799
+} Gesture;922,46857
+    CAMERA_CUSTOM 926,46911
+    CAMERA_FREE,927,47015
+    CAMERA_ORBITAL,928,47072
+    CAMERA_FIRST_PERSON,929,47158
+    CAMERA_THIRD_PERSON 930,47218
+} CameraMode;931,47278
+    CAMERA_PERSPECTIVE 935,47333
+    CAMERA_ORTHOGRAPHIC 936,47396
+} CameraProjection;937,47460
+    NPATCH_NINE_PATCH 941,47518
+    NPATCH_THREE_PATCH_VERTICAL,942,47583
+    NPATCH_THREE_PATCH_HORIZONTAL 943,47648
+} NPatchLayout;944,47713
+typedef void (*TraceLogCallback)TraceLogCallback948,47839
+typedef unsigned char *(*LoadFileDataCallback)LoadFileDataCallback949,47961
+typedef bool (*SaveFileDataCallback)SaveFileDataCallback950,48078
+typedef char *(*LoadFileTextCallback)LoadFileTextCallback951,48195
+typedef bool (*SaveFileTextCallback)SaveFileTextCallback952,48294
+#define GetMouseRay 1063,58785
+typedef void (*AudioCallback)AudioCallback1624,124407
+
+lib/raylib-5.5/include/raymath.h,9395
+#define RAYMATH_H55,2985
+        #define RMAPI 64,3313
+        #define RMAPI 66,3472
+        #define RMAPI 68,3656
+        #define RMAPI 70,3776
+    #define RMAPI 73,3894
+        #define RMAPI 76,4026
+        #define RMAPI 78,4131
+    #define PI 87,4455
+    #define EPSILON 91,4522
+    #define DEG2RAD 95,4580
+    #define RAD2DEG 99,4640
+    #define MatrixToFloat(104,4738
+    #define Vector3ToFloat(109,4861
+typedef struct Vector2 117,5185
+    float x;118,5211
+    float y;119,5225
+} Vector2;120,5239
+#define RL_VECTOR2_TYPE121,5251
+typedef struct Vector3 126,5334
+    float x;127,5360
+    float y;128,5374
+    float z;129,5388
+} Vector3;130,5402
+#define RL_VECTOR3_TYPE131,5414
+typedef struct Vector4 136,5497
+    float x;137,5523
+    float y;138,5537
+    float z;139,5551
+    float w;140,5565
+} Vector4;141,5579
+#define RL_VECTOR4_TYPE142,5591
+typedef Vector4 Quaternion;147,5680
+#define RL_QUATERNION_TYPE148,5709
+typedef struct Matrix 153,5841
+    float m0,154,5866
+    float m0, m4,154,5866
+    float m0, m4, m8,154,5866
+    float m0, m4, m8, m12;154,5866
+    float m1,155,5934
+    float m1, m5,155,5934
+    float m1, m5, m9,155,5934
+    float m1, m5, m9, m13;155,5934
+    float m2,156,6003
+    float m2, m6,156,6003
+    float m2, m6, m10,156,6003
+    float m2, m6, m10, m14;156,6003
+    float m3,157,6071
+    float m3, m7,157,6071
+    float m3, m7, m11,157,6071
+    float m3, m7, m11, m15;157,6071
+} Matrix;158,6140
+#define RL_MATRIX_TYPE159,6151
+typedef struct float3 163,6272
+    float v[v164,6297
+} float3;165,6314
+typedef struct float16 167,6327
+    float v[v168,6353
+} float16;169,6371
+RMAPI float Clamp(178,6747
+RMAPI float Lerp(188,6972
+RMAPI float Normalize(196,7153
+RMAPI float Remap(204,7351
+RMAPI float Wrap(212,7626
+RMAPI int FloatEquals(220,7836
+    #define EPSILON 223,7903
+RMAPI Vector2 Vector2Zero(236,8316
+RMAPI Vector2 Vector2One(244,8455
+RMAPI Vector2 Vector2Add(252,8585
+RMAPI Vector2 Vector2AddValue(260,8748
+RMAPI Vector2 Vector2Subtract(268,8914
+RMAPI Vector2 Vector2SubtractValue(276,9086
+RMAPI float Vector2Length(284,9250
+RMAPI float Vector2LengthSqr(292,9403
+RMAPI float Vector2DotProduct(300,9555
+RMAPI float Vector2Distance(308,9728
+RMAPI float Vector2DistanceSqr(316,9947
+RMAPI float Vector2Angle(325,10209
+RMAPI float Vector2LineAngle(340,10585
+RMAPI Vector2 Vector2Scale(351,10890
+RMAPI Vector2 Vector2Multiply(359,11050
+RMAPI Vector2 Vector2Negate(367,11201
+RMAPI Vector2 Vector2Divide(375,11337
+RMAPI Vector2 Vector2Normalize(383,11498
+RMAPI Vector2 Vector2Transform(399,11834
+RMAPI Vector2 Vector2Lerp(414,12181
+RMAPI Vector2 Vector2Reflect(425,12438
+RMAPI Vector2 Vector2Min(438,12774
+RMAPI Vector2 Vector2Max(449,13001
+RMAPI Vector2 Vector2Rotate(460,13209
+RMAPI Vector2 Vector2MoveTowards(474,13504
+RMAPI Vector2 Vector2Invert(493,13999
+RMAPI Vector2 Vector2Clamp(502,14216
+RMAPI Vector2 Vector2ClampValue(513,14509
+RMAPI int Vector2Equals(540,15104
+    #define EPSILON 543,15177
+RMAPI Vector2 Vector2Refract(557,15757
+RMAPI Vector3 Vector3Zero(582,16382
+RMAPI Vector3 Vector3One(590,16527
+RMAPI Vector3 Vector3Add(598,16653
+RMAPI Vector3 Vector3AddValue(606,16829
+RMAPI Vector3 Vector3Subtract(614,16996
+RMAPI Vector3 Vector3SubtractValue(622,17181
+RMAPI Vector3 Vector3Scale(630,17358
+RMAPI Vector3 Vector3Multiply(638,17533
+RMAPI Vector3 Vector3CrossProduct(646,17717
+RMAPI Vector3 Vector3Perpendicular(654,17947
+RMAPI float Vector3Length(683,18628
+RMAPI float Vector3LengthSqr(691,18793
+RMAPI float Vector3DotProduct(699,18957
+RMAPI float Vector3Distance(707,19142
+RMAPI float Vector3DistanceSqr(720,19434
+RMAPI float Vector3Angle(733,19712
+RMAPI Vector3 Vector3Negate(746,20123
+RMAPI Vector3 Vector3Divide(754,20265
+RMAPI Vector3 Vector3Normalize(762,20437
+RMAPI Vector3 Vector3Project(780,20816
+RMAPI Vector3 Vector3Reject(797,21208
+RMAPI void Vector3OrthoNormalize(816,21708
+RMAPI Vector3 Vector3Transform(849,22654
+RMAPI Vector3 Vector3RotateByQuaternion(865,23053
+RMAPI Vector3 Vector3RotateByAxisAngle(877,23580
+RMAPI Vector3 Vector3MoveTowards(929,24862
+RMAPI Vector3 Vector3Lerp(950,25469
+RMAPI Vector3 Vector3CubicHermite(963,25937
+RMAPI Vector3 Vector3Reflect(978,26784
+RMAPI Vector3 Vector3Min(996,27292
+RMAPI Vector3 Vector3Max(1008,27554
+RMAPI Vector3 Vector3Barycenter(1021,27914
+RMAPI Vector3 Vector3Unproject(1045,29037
+RMAPI float3 Vector3ToFloatV(1128,33901
+RMAPI Vector3 Vector3Invert(1140,34102
+RMAPI Vector3 Vector3Clamp(1149,34329
+RMAPI Vector3 Vector3ClampValue(1161,34659
+RMAPI int Vector3Equals(1189,35297
+    #define EPSILON 1192,35370
+RMAPI Vector3 Vector3Refract(1207,36047
+RMAPI Vector4 Vector4Zero(1232,36684
+RMAPI Vector4 Vector4One(1238,36795
+RMAPI Vector4 Vector4Add(1244,36905
+RMAPI Vector4 Vector4AddValue(1255,37102
+RMAPI Vector4 Vector4Subtract(1266,37294
+RMAPI Vector4 Vector4SubtractValue(1277,37496
+RMAPI float Vector4Length(1288,37693
+RMAPI float Vector4LengthSqr(1294,37833
+RMAPI float Vector4DotProduct(1300,37969
+RMAPI float Vector4Distance(1307,38164
+RMAPI float Vector4DistanceSqr(1316,38460
+RMAPI Vector4 Vector4Scale(1325,38703
+RMAPI Vector4 Vector4Multiply(1332,38883
+RMAPI Vector4 Vector4Negate(1339,39054
+RMAPI Vector4 Vector4Divide(1346,39200
+RMAPI Vector4 Vector4Normalize(1353,39381
+RMAPI Vector4 Vector4Min(1371,39810
+RMAPI Vector4 Vector4Max(1384,40107
+RMAPI Vector4 Vector4Lerp(1397,40413
+RMAPI Vector4 Vector4MoveTowards(1410,40750
+RMAPI Vector4 Vector4Invert(1433,41415
+RMAPI int Vector4Equals(1440,41602
+    #define EPSILON 1443,41675
+RMAPI float MatrixDeterminant(1459,42387
+RMAPI float MatrixTrace(1480,43403
+RMAPI Matrix MatrixTranspose(1488,43560
+RMAPI Matrix MatrixInvert(1513,44101
+RMAPI Matrix MatrixIdentity(1560,46044
+RMAPI Matrix MatrixAdd(1571,46320
+RMAPI Matrix MatrixSubtract(1596,47082
+RMAPI Matrix MatrixMultiply(1622,47900
+RMAPI Matrix MatrixTranslate(1647,49569
+RMAPI Matrix MatrixRotate(1659,49930
+RMAPI Matrix MatrixRotateX(1704,50987
+RMAPI Matrix MatrixRotateY(1724,51510
+RMAPI Matrix MatrixRotateZ(1744,52033
+RMAPI Matrix MatrixRotateXYZ(1765,52559
+RMAPI Matrix MatrixRotateZYX(1796,53460
+RMAPI Matrix MatrixScale(1831,54186
+RMAPI Matrix MatrixFrustum(1842,54488
+RMAPI Matrix MatrixPerspective(1875,55433
+RMAPI Matrix MatrixOrtho(1901,56283
+RMAPI Matrix MatrixLookAt(1930,57105
+RMAPI float16 MatrixToFloatV(1985,58734
+RMAPI Quaternion QuaternionAdd(2014,59529
+RMAPI Quaternion QuaternionAddValue(2022,59735
+RMAPI Quaternion QuaternionSubtract(2030,59927
+RMAPI Quaternion QuaternionSubtractValue(2038,60143
+RMAPI Quaternion QuaternionIdentity(2046,60339
+RMAPI float QuaternionLength(2054,60505
+RMAPI Quaternion QuaternionNormalize(2062,60679
+RMAPI Quaternion QuaternionInvert(2079,61084
+RMAPI Quaternion QuaternionMultiply(2099,61516
+RMAPI Quaternion QuaternionScale(2115,62023
+RMAPI Quaternion QuaternionDivide(2128,62273
+RMAPI Quaternion QuaternionLerp(2136,62500
+RMAPI Quaternion QuaternionNlerp(2149,62889
+RMAPI Quaternion QuaternionSlerp(2174,63640
+    #define EPSILON 2179,63778
+RMAPI Quaternion QuaternionCubicHermiteSpline(2221,65205
+RMAPI Quaternion QuaternionFromVector3ToVector3(2246,66013
+RMAPI Quaternion QuaternionFromMatrix(2274,66949
+RMAPI Matrix QuaternionToMatrix(2338,68911
+RMAPI Quaternion QuaternionFromAxisAngle(2372,69808
+RMAPI void QuaternionToAxisAngle(2416,71011
+RMAPI Quaternion QuaternionFromEuler(2454,72003
+RMAPI Vector3 QuaternionToEuler(2475,72619
+RMAPI Quaternion QuaternionTransform(2499,73264
+RMAPI int QuaternionEquals(2512,73723
+    #define EPSILON 2515,73805
+RMAPI void MatrixDecompose(2531,74761
+static constexpr Vector2 Vector2Zeros 2597,76568
+static constexpr Vector2 Vector2Ones 2598,76619
+static constexpr Vector2 Vector2UnitX 2599,76669
+static constexpr Vector2 Vector2UnitY 2600,76720
+inline Vector2 operator 2624,77259
+inline const Vector2& operator 2629,77369
+inline Vector2 operator 2635,77497
+inline const Vector2& operator 2640,77612
+inline Vector2 operator 2646,77745
+inline bool operator 2679,78482
+static constexpr Vector3 Vector3Zeros 2690,78790
+static constexpr Vector3 Vector3Ones 2691,78844
+static constexpr Vector3 Vector3UnitX 2692,78897
+static constexpr Vector3 Vector3UnitY 2693,78951
+static constexpr Vector3 Vector3UnitZ 2694,79005
+inline Vector3 operator 2718,79547
+inline const Vector3& operator 2723,79657
+inline Vector3 operator 2729,79785
+inline const Vector3& operator 2734,79900
+inline Vector3 operator 2740,80033
+inline bool operator 2773,80770
+static constexpr Vector4 Vector4Zeros 2784,81137
+static constexpr Vector4 Vector4Ones 2785,81194
+static constexpr Vector4 Vector4UnitX 2786,81250
+static constexpr Vector4 Vector4UnitY 2787,81307
+static constexpr Vector4 Vector4UnitZ 2788,81364
+static constexpr Vector4 Vector4UnitW 2789,81421
+inline Vector4 operator 2813,81966
+inline const Vector4& operator 2818,82076
+inline Vector4 operator 2824,82204
+inline const Vector4& operator 2829,82319
+inline bool operator 2857,82941
+static constexpr Quaternion QuaternionZeros 2868,83370
+static constexpr Quaternion QuaternionOnes 2869,83433
+static constexpr Quaternion QuaternionUnitX 2870,83495
+inline Quaternion operator 2894,84094
+inline const Quaternion& operator 2899,84218
+inline Matrix operator 2928,84851
+inline const Matrix& operator 2933,84962
+
+lib/raylib-5.5/include/rlgl.h,25056
+#define RLGL_H111,7419
+#define RLGL_VERSION 113,7437
+    #define RLAPI 119,7794
+    #define RLAPI 121,7940
+    #define RLAPI 123,8121
+    #define RLAPI 128,8287
+    #define TRACELOG(133,8434
+    #define TRACELOGD(134,8476
+    #define RL_MALLOC(139,8576
+    #define RL_CALLOC(142,8645
+    #define RL_REALLOC(145,8717
+    #define RL_FREE(148,8787
+        #define GRAPHICS_API_OPENGL_33158,9151
+        #undef GRAPHICS_API_OPENGL_21164,9345
+        #undef GRAPHICS_API_OPENGL_33167,9437
+        #undef GRAPHICS_API_OPENGL_43170,9529
+        #undef GRAPHICS_API_OPENGL_ES2173,9622
+    #define GRAPHICS_API_OPENGL_33180,9836
+    #define GRAPHICS_API_OPENGL_33185,9969
+    #define GRAPHICS_API_OPENGL_ES2190,10115
+#define RLGL_RENDER_TEXTURES_HINT195,10281
+        #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS 206,10820
+        #define RL_DEFAULT_BATCH_BUFFER_ELEMENTS 212,11128
+    #define RL_DEFAULT_BATCH_BUFFERS 216,11238
+    #define RL_DEFAULT_BATCH_DRAWCALLS 219,11396
+    #define RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS 222,11581
+    #define RL_MAX_MATRIX_STACK_SIZE 227,11813
+    #define RL_MAX_SHADER_LOCATIONS 232,11967
+    #define RL_CULL_DISTANCE_NEAR 237,12147
+    #define RL_CULL_DISTANCE_FAR 240,12276
+#define RL_TEXTURE_WRAP_S 244,12430
+#define RL_TEXTURE_WRAP_T 245,12512
+#define RL_TEXTURE_MAG_FILTER 246,12594
+#define RL_TEXTURE_MIN_FILTER 247,12680
+#define RL_TEXTURE_FILTER_NEAREST 249,12768
+#define RL_TEXTURE_FILTER_LINEAR 250,12843
+#define RL_TEXTURE_FILTER_MIP_NEAREST 251,12917
+#define RL_TEXTURE_FILTER_NEAREST_MIP_LINEAR 252,13007
+#define RL_TEXTURE_FILTER_LINEAR_MIP_NEAREST 253,13096
+#define RL_TEXTURE_FILTER_MIP_LINEAR 254,13185
+#define RL_TEXTURE_FILTER_ANISOTROPIC 255,13273
+#define RL_TEXTURE_MIPMAP_BIAS_RATIO 256,13376
+#define RL_TEXTURE_WRAP_REPEAT 258,13500
+#define RL_TEXTURE_WRAP_CLAMP 259,13574
+#define RL_TEXTURE_WRAP_MIRROR_REPEAT 260,13655
+#define RL_TEXTURE_WRAP_MIRROR_CLAMP 261,13738
+#define RL_MODELVIEW 264,13864
+#define RL_PROJECTION 265,13941
+#define RL_TEXTURE 266,14019
+#define RL_LINES 269,14130
+#define RL_TRIANGLES 270,14203
+#define RL_QUADS 271,14280
+#define RL_UNSIGNED_BYTE 274,14384
+#define RL_FLOAT 275,14465
+#define RL_STREAM_DRAW 278,14565
+#define RL_STREAM_READ 279,14644
+#define RL_STREAM_COPY 280,14723
+#define RL_STATIC_DRAW 281,14802
+#define RL_STATIC_READ 282,14881
+#define RL_STATIC_COPY 283,14960
+#define RL_DYNAMIC_DRAW 284,15039
+#define RL_DYNAMIC_READ 285,15119
+#define RL_DYNAMIC_COPY 286,15199
+#define RL_FRAGMENT_SHADER 289,15300
+#define RL_VERTEX_SHADER 290,15383
+#define RL_COMPUTE_SHADER 291,15464
+#define RL_ZERO 294,15572
+#define RL_ONE 295,15644
+#define RL_SRC_COLOR 296,15715
+#define RL_ONE_MINUS_SRC_COLOR 297,15792
+#define RL_SRC_ALPHA 298,15879
+#define RL_ONE_MINUS_SRC_ALPHA 299,15956
+#define RL_DST_ALPHA 300,16043
+#define RL_ONE_MINUS_DST_ALPHA 301,16120
+#define RL_DST_COLOR 302,16207
+#define RL_ONE_MINUS_DST_COLOR 303,16284
+#define RL_SRC_ALPHA_SATURATE 304,16371
+#define RL_CONSTANT_COLOR 305,16457
+#define RL_ONE_MINUS_CONSTANT_COLOR 306,16539
+#define RL_CONSTANT_ALPHA 307,16631
+#define RL_ONE_MINUS_CONSTANT_ALPHA 308,16713
+#define RL_FUNC_ADD 311,16843
+#define RL_MIN 312,16919
+#define RL_MAX 313,16990
+#define RL_FUNC_SUBTRACT 314,17061
+#define RL_FUNC_REVERSE_SUBTRACT 315,17142
+#define RL_BLEND_EQUATION 316,17231
+#define RL_BLEND_EQUATION_RGB 317,17313
+#define RL_BLEND_EQUATION_ALPHA 318,17429
+#define RL_BLEND_DST_RGB 319,17517
+#define RL_BLEND_SRC_RGB 320,17598
+#define RL_BLEND_DST_ALPHA 321,17679
+#define RL_BLEND_SRC_ALPHA 322,17762
+#define RL_BLEND_COLOR 323,17845
+#define RL_READ_FRAMEBUFFER 325,17926
+#define RL_DRAW_FRAMEBUFFER 326,18010
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION 330,18194
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD 333,18315
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL 336,18434
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR 339,18552
+#define RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT 342,18676
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2 345,18798
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES 348,18918
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEIDS 352,19075
+    #define RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS 355,19199
+typedef enum bool 366,19705
+typedef enum bool { false 366,19705
+typedef enum bool { false = 0, true 366,19705
+typedef enum bool { false = 0, true = !false } bool;366,19705
+typedef struct Matrix 371,19868
+    float m0,372,19893
+    float m0, m4,372,19893
+    float m0, m4, m8,372,19893
+    float m0, m4, m8, m12;372,19893
+    float m1,373,19961
+    float m1, m5,373,19961
+    float m1, m5, m9,373,19961
+    float m1, m5, m9, m13;373,19961
+    float m2,374,20030
+    float m2, m6,374,20030
+    float m2, m6, m10,374,20030
+    float m2, m6, m10, m14;374,20030
+    float m3,375,20098
+    float m3, m7,375,20098
+    float m3, m7, m11,375,20098
+    float m3, m7, m11, m15;375,20098
+} Matrix;376,20167
+#define RL_MATRIX_TYPE377,20178
+typedef struct rlVertexBuffer 381,20288
+    int elementCount;382,20321
+    float *vertices;vertices384,20400
+    float *texcoords;texcoords385,20506
+    float *normals;normals386,20622
+    unsigned char *colors;colors387,20726
+    unsigned int *indices;indices389,20903
+    unsigned short *indices;indices392,21057
+    unsigned int vaoId;394,21173
+    unsigned int vboId[vboId395,21239
+} rlVertexBuffer;396,21332
+typedef struct rlDrawCall 402,21629
+    int mode;403,21658
+    int vertexCount;404,21732
+    int vertexAlignment;405,21797
+    unsigned int textureId;408,22119
+} rlDrawCall;412,22439
+typedef struct rlRenderBatch 415,22479
+    int bufferCount;416,22511
+    int currentBuffer;417,22598
+    rlVertexBuffer *vertexBuffer;vertexBuffer418,22685
+    rlDrawCall *draws;draws420,22759
+    int drawCounter;421,22834
+    float currentDepth;422,22889
+} rlRenderBatch;423,22959
+    RL_OPENGL_11 427,23014
+    RL_OPENGL_21,428,23061
+    RL_OPENGL_33,429,23119
+    RL_OPENGL_43,430,23177
+    RL_OPENGL_ES_20,431,23241
+    RL_OPENGL_ES_30 432,23302
+} rlGlVersion;433,23366
+    RL_LOG_ALL 438,23458
+    RL_LOG_TRACE,439,23511
+    RL_LOG_DEBUG,440,23593
+    RL_LOG_INFO,441,23713
+    RL_LOG_WARNING,442,23795
+    RL_LOG_ERROR,443,23877
+    RL_LOG_FATAL,444,23959
+    RL_LOG_NONE 445,24052
+} rlTraceLogLevel;446,24104
+    RL_PIXELFORMAT_UNCOMPRESSED_GRAYSCALE 451,24212
+    RL_PIXELFORMAT_UNCOMPRESSED_GRAY_ALPHA,452,24294
+    RL_PIXELFORMAT_UNCOMPRESSED_R5G6B5,453,24370
+    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8,454,24432
+    RL_PIXELFORMAT_UNCOMPRESSED_R5G5B5A1,455,24494
+    RL_PIXELFORMAT_UNCOMPRESSED_R4G4B4A4,456,24570
+    RL_PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,457,24646
+    RL_PIXELFORMAT_UNCOMPRESSED_R32,458,24708
+    RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32,459,24790
+    RL_PIXELFORMAT_UNCOMPRESSED_R32G32B32A32,460,24875
+    RL_PIXELFORMAT_UNCOMPRESSED_R16,461,24960
+    RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16,462,25047
+    RL_PIXELFORMAT_UNCOMPRESSED_R16G16B16A16,463,25137
+    RL_PIXELFORMAT_COMPRESSED_DXT1_RGB,464,25227
+    RL_PIXELFORMAT_COMPRESSED_DXT1_RGBA,465,25299
+    RL_PIXELFORMAT_COMPRESSED_DXT3_RGBA,466,25374
+    RL_PIXELFORMAT_COMPRESSED_DXT5_RGBA,467,25435
+    RL_PIXELFORMAT_COMPRESSED_ETC1_RGB,468,25496
+    RL_PIXELFORMAT_COMPRESSED_ETC2_RGB,469,25557
+    RL_PIXELFORMAT_COMPRESSED_ETC2_EAC_RGBA,470,25618
+    RL_PIXELFORMAT_COMPRESSED_PVRT_RGB,471,25679
+    RL_PIXELFORMAT_COMPRESSED_PVRT_RGBA,472,25740
+    RL_PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA,473,25801
+    RL_PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA 474,25862
+} rlPixelFormat;475,25923
+    RL_TEXTURE_FILTER_POINT 481,26136
+    RL_TEXTURE_FILTER_BILINEAR,482,26216
+    RL_TEXTURE_FILTER_TRILINEAR,483,26277
+    RL_TEXTURE_FILTER_ANISOTROPIC_4X,484,26363
+    RL_TEXTURE_FILTER_ANISOTROPIC_8X,485,26432
+    RL_TEXTURE_FILTER_ANISOTROPIC_16X,486,26501
+} rlTextureFilter;487,26571
+    RL_BLEND_ALPHA 491,26648
+    RL_BLEND_ADDITIVE,492,26735
+    RL_BLEND_MULTIPLIED,493,26808
+    RL_BLEND_ADD_COLORS,494,26886
+    RL_BLEND_SUBTRACT_COLORS,495,26973
+    RL_BLEND_ALPHA_PREMULTIPLY,496,27065
+    RL_BLEND_CUSTOM,497,27156
+    RL_BLEND_CUSTOM_SEPARATE 498,27270
+} rlBlendMode;499,27392
+    RL_SHADER_LOC_VERTEX_POSITION 503,27457
+    RL_SHADER_LOC_VERTEX_TEXCOORD01,504,27545
+    RL_SHADER_LOC_VERTEX_TEXCOORD02,505,27635
+    RL_SHADER_LOC_VERTEX_NORMAL,506,27725
+    RL_SHADER_LOC_VERTEX_TANGENT,507,27811
+    RL_SHADER_LOC_VERTEX_COLOR,508,27898
+    RL_SHADER_LOC_MATRIX_MVP,509,27983
+    RL_SHADER_LOC_MATRIX_VIEW,510,28082
+    RL_SHADER_LOC_MATRIX_PROJECTION,511,28183
+    RL_SHADER_LOC_MATRIX_MODEL,512,28271
+    RL_SHADER_LOC_MATRIX_NORMAL,513,28366
+    RL_SHADER_LOC_VECTOR_VIEW,514,28450
+    RL_SHADER_LOC_COLOR_DIFFUSE,515,28532
+    RL_SHADER_LOC_COLOR_SPECULAR,516,28623
+    RL_SHADER_LOC_COLOR_AMBIENT,517,28715
+    RL_SHADER_LOC_MAP_ALBEDO,518,28806
+    RL_SHADER_LOC_MAP_METALNESS,519,28930
+    RL_SHADER_LOC_MAP_NORMAL,520,29058
+    RL_SHADER_LOC_MAP_ROUGHNESS,521,29145
+    RL_SHADER_LOC_MAP_OCCLUSION,522,29235
+    RL_SHADER_LOC_MAP_EMISSION,523,29325
+    RL_SHADER_LOC_MAP_HEIGHT,524,29414
+    RL_SHADER_LOC_MAP_CUBEMAP,525,29501
+    RL_SHADER_LOC_MAP_IRRADIANCE,526,29591
+    RL_SHADER_LOC_MAP_PREFILTER,527,29684
+    RL_SHADER_LOC_MAP_BRDF 528,29776
+} rlShaderLocationIndex;529,29861
+#define RL_SHADER_LOC_MAP_DIFFUSE 531,29889
+#define RL_SHADER_LOC_MAP_SPECULAR 532,29955
+    RL_SHADER_UNIFORM_FLOAT 536,30071
+    RL_SHADER_UNIFORM_VEC2,537,30142
+    RL_SHADER_UNIFORM_VEC3,538,30222
+    RL_SHADER_UNIFORM_VEC4,539,30302
+    RL_SHADER_UNIFORM_INT,540,30382
+    RL_SHADER_UNIFORM_IVEC2,541,30451
+    RL_SHADER_UNIFORM_IVEC3,542,30530
+    RL_SHADER_UNIFORM_IVEC4,543,30609
+    RL_SHADER_UNIFORM_UINT,544,30688
+    RL_SHADER_UNIFORM_UIVEC2,545,30766
+    RL_SHADER_UNIFORM_UIVEC3,546,30855
+    RL_SHADER_UNIFORM_UIVEC4,547,30944
+    RL_SHADER_UNIFORM_SAMPLER2D 548,31033
+} rlShaderUniformDataType;549,31108
+    RL_SHADER_ATTRIB_FLOAT 553,31186
+    RL_SHADER_ATTRIB_VEC2,554,31259
+    RL_SHADER_ATTRIB_VEC3,555,31341
+    RL_SHADER_ATTRIB_VEC4 556,31423
+} rlShaderAttributeDataType;557,31505
+    RL_ATTACHMENT_COLOR_CHANNEL0 562,31657
+    RL_ATTACHMENT_COLOR_CHANNEL1 563,31742
+    RL_ATTACHMENT_COLOR_CHANNEL2 564,31827
+    RL_ATTACHMENT_COLOR_CHANNEL3 565,31912
+    RL_ATTACHMENT_COLOR_CHANNEL4 566,31997
+    RL_ATTACHMENT_COLOR_CHANNEL5 567,32082
+    RL_ATTACHMENT_COLOR_CHANNEL6 568,32167
+    RL_ATTACHMENT_COLOR_CHANNEL7 569,32252
+    RL_ATTACHMENT_DEPTH 570,32337
+    RL_ATTACHMENT_STENCIL 571,32420
+} rlFramebufferAttachType;572,32505
+    RL_ATTACHMENT_CUBEMAP_POSITIVE_X 576,32591
+    RL_ATTACHMENT_CUBEMAP_NEGATIVE_X 577,32693
+    RL_ATTACHMENT_CUBEMAP_POSITIVE_Y 578,32795
+    RL_ATTACHMENT_CUBEMAP_NEGATIVE_Y 579,32897
+    RL_ATTACHMENT_CUBEMAP_POSITIVE_Z 580,32999
+    RL_ATTACHMENT_CUBEMAP_NEGATIVE_Z 581,33101
+    RL_ATTACHMENT_TEXTURE2D 582,33203
+    RL_ATTACHMENT_RENDERBUFFER 583,33298
+} rlFramebufferAttachTextureType;584,33396
+    RL_CULL_FACE_FRONT 588,33471
+    RL_CULL_FACE_BACK589,33500
+} rlCullMode;590,33523
+    #define GLAD_API_CALL_EXPORT827,52839
+    #define GLAD_API_CALL_EXPORT_BUILD828,52873
+                #define APIENTRY 839,53279
+                #define APIENTRY841,53342
+            #define WINGDIAPI 846,53534
+    #define GLAD_MALLOC 854,53727
+    #define GLAD_FREE 855,53762
+    #define GLAD_GL_IMPLEMENTATION857,53795
+    #define GL_GLEXT_PROTOTYPES863,54046
+        #define GLAD_GLES2_IMPLEMENTATION869,54414
+        #define GL_GLEXT_PROTOTYPES872,54510
+    typedef void (GL_APIENTRYP PFNGLDRAWARRAYSINSTANCEDEXTPROC)881,54993
+    typedef void (GL_APIENTRYP PFNGLDRAWELEMENTSINSTANCEDEXTPROC)882,55120
+    typedef void (GL_APIENTRYP PFNGLVERTEXATTRIBDIVISOREXTPROC)883,55270
+    #define PI 895,55892
+    #define DEG2RAD 898,55957
+    #define RAD2DEG 901,56015
+    #define GL_SHADING_LANGUAGE_VERSION 905,56095
+    #define GL_COMPRESSED_RGB_S3TC_DXT1_EXT 909,56202
+    #define GL_COMPRESSED_RGBA_S3TC_DXT1_EXT 912,56308
+    #define GL_COMPRESSED_RGBA_S3TC_DXT3_EXT 915,56414
+    #define GL_COMPRESSED_RGBA_S3TC_DXT5_EXT 918,56520
+    #define GL_ETC1_RGB8_OES 921,56610
+    #define GL_COMPRESSED_RGB8_ETC2 924,56707
+    #define GL_COMPRESSED_RGBA8_ETC2_EAC 927,56809
+    #define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG 930,56917
+    #define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG 933,57026
+    #define GL_COMPRESSED_RGBA_ASTC_4x4_KHR 936,57131
+    #define GL_COMPRESSED_RGBA_ASTC_8x8_KHR 939,57236
+    #define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT 943,57345
+    #define GL_TEXTURE_MAX_ANISOTROPY_EXT 946,57448
+    #define GL_PROGRAM_POINT_SIZE 950,57545
+    #define GL_LINE_WIDTH 954,57634
+    #define GL_UNSIGNED_SHORT_5_6_5 958,57737
+    #define GL_UNSIGNED_SHORT_5_5_5_1 959,57793
+    #define GL_UNSIGNED_SHORT_4_4_4_4 960,57849
+    #define GL_LUMINANCE 964,57952
+    #define GL_LUMINANCE_ALPHA 965,58008
+    #define glClearDepth 969,58112
+        #define GL_READ_FRAMEBUFFER 971,58211
+        #define GL_DRAW_FRAMEBUFFER 972,58271
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION 978,58466
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD 981,58677
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL 984,58886
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR 987,59092
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT 990,59299
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2 993,59510
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEIDS 996,59721
+    #define RL_DEFAULT_SHADER_ATTRIB_NAME_BONEWEIGHTS 999,59934
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_MVP 1003,60146
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW 1006,60307
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION 1009,60457
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL 1012,60608
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL 1015,60755
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR 1018,60936
+    #define RL_DEFAULT_SHADER_UNIFORM_NAME_BONE_MATRICES 1021,61138
+    #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0 1024,61290
+    #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1 1027,61461
+    #define RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2 1030,61632
+typedef struct rlglData 1037,62035
+    rlRenderBatch *currentBatch;currentBatch1038,62062
+    rlRenderBatch defaultBatch;1039,62131
+        int vertexCounter;1042,62225
+        float texcoordx,1043,62348
+        float texcoordx, texcoordy;1043,62348
+        float normalx,1044,62453
+        float normalx, normaly,1044,62453
+        float normalx, normaly, normalz;1044,62453
+        unsigned char colorr,1045,62546
+        unsigned char colorr, colorg,1045,62546
+        unsigned char colorr, colorg, colorb,1045,62546
+        unsigned char colorr, colorg, colorb, colora;1045,62546
+        int currentMatrixMode;1047,62652
+        Matrix *currentMatrix;currentMatrix1048,62720
+        Matrix modelview;1049,62791
+        Matrix projection;1050,62864
+        Matrix transform;1051,62938
+        bool transformRequired;1052,63050
+        Matrix stack[stack1053,63177
+        int stackCounter;1054,63254
+        unsigned int defaultTextureId;1056,63325
+        unsigned int activeTextureId[activeTextureId1057,63438
+        unsigned int defaultVShaderId;1058,63591
+        unsigned int defaultFShaderId;1059,63697
+        unsigned int defaultShaderId;1060,63805
+        int *defaultShaderLocs;defaultShaderLocs1061,63922
+        unsigned int currentShaderId;1062,64027
+        int *currentShaderLocs;currentShaderLocs1063,64147
+        bool stereoRender;1065,64286
+        Matrix projectionStereo[projectionStereo1066,64356
+        Matrix viewOffsetStereo[viewOffsetStereo1067,64449
+        int currentBlendMode;1070,64576
+        int glBlendSrcFactor;1071,64645
+        int glBlendDstFactor;1072,64716
+        int glBlendEquation;1073,64792
+        int glBlendSrcFactorRGB;1074,64858
+        int glBlendDestFactorRGB;1075,64933
+        int glBlendSrcFactorAlpha;1076,65013
+        int glBlendDestFactorAlpha;1077,65090
+        int glBlendEquationRGB;1078,65172
+        int glBlendEquationAlpha;1079,65246
+        bool glCustomBlendModeModified;1080,65322
+        int framebufferWidth;1082,65428
+        int framebufferHeight;1083,65502
+    } State;1085,65579
+        bool vao;1087,65636
+        bool instancing;1088,65770
+        bool texNPOT;1089,65916
+        bool texDepth;1090,66046
+        bool texDepthWebGL;1091,66164
+        bool texFloat32;1092,66277
+        bool texFloat16;1093,66392
+        bool texCompDXT;1094,66517
+        bool texCompETC1;1095,66706
+        bool texCompETC2;1096,66859
+        bool texCompPVRT;1097,66971
+        bool texCompASTC;1098,67086
+        bool texMirrorClamp;1099,67242
+        bool texAnisoFilter;1100,67353
+        bool computeShader;1101,67475
+        bool ssbo;1102,67571
+        float maxAnisotropyLevel;1104,67696
+        int maxDepthBits;1105,67797
+    } ExtSupported;1107,67880
+} rlglData;1108,67935
+typedef void *(*rlglLoadProc)rlglLoadProc1110,67950
+static double rlCullDistanceNear 1117,68342
+static double rlCullDistanceFar 1118,68401
+static rlglData RLGL 1121,68533
+static PFNGLGENVERTEXARRAYSOESPROC glGenVertexArrays 1126,68767
+static PFNGLBINDVERTEXARRAYOESPROC glBindVertexArray 1127,68829
+static PFNGLDELETEVERTEXARRAYSOESPROC glDeleteVertexArrays 1128,68891
+static PFNGLDRAWARRAYSINSTANCEDEXTPROC glDrawArraysInstanced 1131,69038
+static PFNGLDRAWELEMENTSINSTANCEDEXTPROC glDrawElementsInstanced 1132,69108
+static PFNGLVERTEXATTRIBDIVISOREXTPROC glVertexAttribDivisor 1133,69182
+typedef struct rl_float16 1150,70098
+    float v[v1151,70127
+} rl_float16;1152,70145
+#define rlMatrixToFloat(1154,70255
+void rlMatrixMode(1167,71045
+void rlFrustum(1178,71327
+void rlOrtho(1183,71487
+void rlPushMatrix(1188,71643
+void rlPopMatrix(1189,71688
+void rlLoadIdentity(1190,71731
+void rlTranslatef(1191,71780
+void rlRotatef(1192,71853
+void rlScalef(1193,71940
+void rlMultMatrixf(1194,72005
+void rlMatrixMode(1198,72198
+void rlPushMatrix(1208,72551
+void rlPopMatrix(1223,73068
+void rlLoadIdentity(1240,73556
+void rlTranslatef(1246,73700
+void rlRotatef(1261,74172
+void rlScalef(1305,75510
+void rlMultMatrixf(1319,75915
+void rlFrustum(1331,76394
+void rlOrtho(1363,77422
+void rlViewport(1396,78571
+void rlSetClipPlanes(1402,78701
+double rlGetCullDistanceNear(1409,78871
+double rlGetCullDistanceFar(1415,78979
+void rlBegin(1426,79405
+void rlEnd(1437,79653
+void rlVertex2i(1438,79684
+void rlVertex2f(1439,79737
+void rlVertex3f(1440,79794
+void rlTexCoord2f(1441,79863
+void rlNormal3f(1442,79924
+void rlColor4ub(1443,79993
+void rlColor3f(1444,80106
+void rlColor4f(1445,80173
+void rlBegin(1449,80386
+void rlEnd(1482,82826
+void rlVertex3f(1492,83252
+void rlVertex2f(1556,87119
+void rlVertex2i(1562,87251
+void rlTexCoord2f(1569,87459
+void rlNormal3f(1577,87642
+void rlColor4ub(1602,88505
+void rlColor4f(1611,88740
+void rlColor3f(1617,88943
+void rlSetTexture(1629,89395
+void rlActiveTextureSlot(1680,92209
+void rlEnableTexture(1688,92395
+void rlDisableTexture(1697,92576
+void rlEnableTextureCubemap(1706,92754
+void rlDisableTextureCubemap(1714,92962
+void rlTextureParameters(1722,93182
+void rlCubemapParameters(1770,95097
+void rlEnableShader(1814,96949
+void rlDisableShader(1822,97128
+void rlEnableFramebuffer(1830,97307
+unsigned int rlGetActiveFramebuffer(1838,97566
+void rlDisableFramebuffer(1848,97869
+void rlBlitFramebuffer(1856,98122
+void rlBindFramebuffer(1864,98537
+void rlActiveDrawBuffers(1873,98878
+void rlEnableColorBlend(1924,100672
+void rlDisableColorBlend(1927,100756
+void rlEnableDepthTest(1930,100837
+void rlDisableDepthTest(1933,100921
+void rlEnableDepthMask(1936,101007
+void rlDisableDepthMask(1939,101089
+void rlEnableBackfaceCulling(1942,101177
+void rlDisableBackfaceCulling(1945,101272
+void rlColorMask(1948,101387
+void rlSetCullFace(1951,101494
+void rlEnableScissorTest(1962,101738
+void rlDisableScissorTest(1965,101828
+void rlScissor(1968,101912
+void rlEnableWireMode(1971,102024
+void rlEnablePointMode(1980,102268
+void rlDisableWireMode(1990,102552
+void rlSetLineWidth(1999,102806
+float rlGetLineWidth(2002,102897
+void rlEnableSmoothLines(2010,103040
+void rlDisableSmoothLines(2018,103217
+void rlEnableStereoRender(2026,103398
+void rlDisableStereoRender(2034,103588
+bool rlIsStereoRenderEnabled(2042,103789
+void rlClearColor(2052,104013
+void rlClearScreenBuffers(2064,104365
+void rlCheckErrors(2071,104683
+void rlSetBlendMode(2095,105826
+void rlSetBlendFactors(2133,107882
+void rlSetBlendFactorsSeparate(2150,108507
+static void GLAPIENTRY rlDebugMessageCallback(2176,109759
+void rlglInit(2237,113097
+void rlglClose(2328,118035
+void rlLoadExtensions(2342,118535
+        #define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT 2576,131727
+int rlGetVersion(2632,135270
+void rlSetFramebufferWidth(2655,135831
+void rlSetFramebufferHeight(2663,136036
+int rlGetFramebufferWidth(2671,136244
+int rlGetFramebufferHeight(2681,136482
+unsigned int rlGetTextureIdDefault(2692,136802
+unsigned int rlGetShaderIdDefault(2702,137040
+int *rlGetShaderLocsDefault(rlGetShaderLocsDefault2712,137278
+rlRenderBatch rlLoadRenderBatch(2724,137635
+void rlUnloadRenderBatch(2857,144846
+void rlDrawRenderBatch(2904,146706
+void rlSetRenderBatchActive(3129,159303
+void rlDrawRenderBatchActive(3140,159631
+bool rlCheckRenderBatchLimit(3149,159962
+unsigned int rlLoadTexture(3177,161140
+unsigned int rlLoadTextureDepth(3331,167987
+unsigned int rlLoadTextureCubemap(3389,170738
+void rlUpdateTexture(3485,175105
+void rlGetGlTextureFormats(3500,175788
+void rlUnloadTexture(3573,184602
+void rlGenTextureMipmaps(3580,184772
+        #define MIN(3596,185472
+        #define MAX(3597,185519
+void *rlReadTexturePixels(rlReadTexturePixels3611,186018
+unsigned char *rlReadScreenPixels(rlReadScreenPixels3675,189078
+unsigned int rlLoadFramebuffer(3707,190460
+void rlFramebufferAttach(3721,190966
+bool rlFramebufferComplete(3762,193037
+void rlUnloadFramebuffer(3795,194335
+unsigned int rlLoadVertexBuffer(3825,195919
+unsigned int rlLoadVertexBufferElement(3839,196332
+void rlEnableVertexBuffer(3853,196758
+void rlDisableVertexBuffer(3861,196963
+void rlEnableVertexBufferElement(3869,197172
+void rlDisableVertexBufferElement(3877,197408
+void rlUpdateVertexBuffer(3886,197680
+void rlUpdateVertexBufferElements(3896,198064
+bool rlEnableVertexArray(3905,198405
+void rlDisableVertexArray(3919,198729
+void rlEnableVertexAttribute(3927,198939
+void rlDisableVertexAttribute(3935,199152
+void rlDrawVertexArray(3943,199354
+void rlDrawVertexArrayElements(3949,199488
+void rlDrawVertexArrayInstanced(3959,199887
+void rlDrawVertexArrayElementsInstanced(3967,200151
+void rlEnableStatePointer(3980,200712
+void rlDisableStatePointer(3995,201432
+unsigned int rlLoadVertexArray(4002,201578
+void rlSetVertexAttribute(4015,201863
+void rlSetVertexAttributeDivisor(4029,202564
+void rlUnloadVertexArray(4037,202801
+void rlUnloadVertexBuffer(4050,203184
+unsigned int rlLoadShaderCode(4062,203658
+unsigned int rlCompileShader(4139,206925
+unsigned int rlLoadShaderProgram(4201,209442
+void rlUnloadShaderProgram(4267,212189
+int rlGetLocationUniform(4277,212479
+int rlGetLocationAttrib(4290,213041
+void rlSetUniform(4303,213596
+void rlSetVertexAttributeDefault(4331,215327
+void rlSetUniformMatrix(4346,216122
+void rlSetUniformMatrices(4360,216558
+void rlSetUniformSampler(4372,217085
+void rlSetShader(4400,218044
+unsigned int rlLoadComputeShaderProgram(4413,218403
+void rlComputeShaderDispatch(4464,220055
+unsigned int rlLoadShaderBuffer(4472,220294
+void rlUnloadShaderBuffer(4490,220994
+void rlUpdateShaderBuffer(4501,221254
+unsigned int rlGetShaderBufferSize(4510,221559
+void rlReadShaderBuffer(4523,221924
+void rlBindShaderBuffer(4532,222214
+void rlCopyShaderBuffer(4540,222415
+void rlBindImageTexture(4550,222821
+Matrix rlGetMatrixModelview(4565,223479
+Matrix rlGetMatrixProjection(4594,224182
+Matrix rlGetMatrixTransform(4623,224785
+Matrix rlGetMatrixProjectionStereo(4637,225435
+Matrix rlGetMatrixViewOffsetStereo(4647,225738
+void rlSetMatrixModelview(4657,226043
+void rlSetMatrixProjection(4665,226279
+void rlSetMatrixProjectionStereo(4673,226510
+void rlSetMatrixViewOffsetStereo(4682,226805
+void rlLoadDrawQuad(4691,227076
+void rlLoadDrawCube(4732,228572
+const char *rlGetPixelFormatName(rlGetPixelFormatName4810,232614
+static void rlLoadShaderDefault(4849,235821
+static void rlUnloadShaderDefault(4980,242542
+static const char *rlGetCompressedFormatName(rlGetCompressedFormatName4998,243177
+static int rlGetPixelDataSize(5076,248050
+static rl_float16 rlMatrixToFloatV(5127,250390
+static Matrix rlMatrixIdentity(5152,250970
+static Matrix rlMatrixMultiply(5166,251292
+static Matrix rlMatrixTranspose(5191,252968
+static Matrix rlMatrixInvert(5216,253512

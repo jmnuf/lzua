@@ -2,6 +2,7 @@
 #if defined(_MSC_VER) && !defined(__clang__)
 #    define nob_cc_flags(cmd) nob_cmd_append(cmd, "/W4", "/nologo", "/wd4244", "/wd4819", "/D_CRT_NONSTDC_NO_WARNINGS")
 #    define cc_debug(cmd) nob_cmd_append(cmd, "/Od", "/Ob1", "/DEBUG", "/Zi", "/DBUILD_DEBUG=1")
+#    define NOB_REBUILD_URSELF(binary_path, source_path) "cl.exe", nob_temp_sprintf("/Fe:%s", (binary_path)), source_path, "/wd4819"
 #else
 #    define cc_debug(cmd) nob_cmd_append(cmd, "-O0", "-ggdb", "-DBUILD_DEBUG=1")
 #endif // nob_cc_output
@@ -25,19 +26,42 @@ void usage(const char *program) {
   printf("Commands\n");
   printf("    run        ---        Execute program after compiling\n");
   printf("    build      ---        Force building of program\n");
+  printf("    etags      ---        Use etags to generate a TAGS file for emacs navigation\n");
   printf("Flags\n");
   printf("    -def <dir> ---        Build program with a default search path for apps\n");
   printf("    -debug     ---        Include debug data in rebuild\n");
 }
 
+
+bool generate_tags(Cmd *cmd) {
+  cmd_append(cmd, "etags", "-o", "TAGS", "main.c", "nob.h");
+  const char *raylib_include_path = "./lib/raylib-5.5/include";
+
+  Nob_File_Paths children = {0};
+  if (!read_entire_dir(raylib_include_path, &children)) return 1;
+
+  da_foreach(const char *, it, &children) {
+    if (streq(*it, ".") || streq(*it, "..")) continue;
+    String_View path = sv_from_cstr(*it);
+    if (!sv_end_with(path, ".h")) continue;
+    cmd_append(cmd, temp_sprintf("%s/%s", raylib_include_path, path.data));
+  }
+
+  return cmd_run(cmd);
+}
+
+
 int main(int argc, char **argv) {
   NOB_GO_REBUILD_URSELF(argc, argv);
 
   const char *program_name = shift(argv, argc);
+  Cmd cmd = {0};
+
   bool run_requested = false;
   bool build_demanded = false;
   bool include_debug = false;
   const char *default_dir = NULL;
+
   while (argc > 0) {
     const char *arg = shift(argv, argc);
 
@@ -60,13 +84,16 @@ int main(int argc, char **argv) {
       build_demanded = true;
       continue;
     }
+    if (streq(arg, "etags")) {
+      if (!generate_tags(&cmd)) return 1;
+      return 0;
+    }
     
     nob_log(ERROR, "Unknown argument provided to build system: %s", arg);
     usage(program_name);
     return 1;
   }
 
-  Cmd cmd = {0};
   if (!mkdir_if_not_exists(BUILD_FOLDER)) return 1;
 
   const char *output_path = BUILD_FOLDER"/lzua";

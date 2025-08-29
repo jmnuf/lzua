@@ -160,8 +160,9 @@ void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton 
     buttons[i].height = GAME_BUTTON_HEIGHT;
     buttons[i].title_width = text_width;
   }
+  if (games.count == 0) return;
 
-  GameButton *row[games.count];
+  GameButton **row = nob_temp_alloc(sizeof(GameButton*)*games.count);
   size_t last_i = 0;
 
   float bounds_width = bounds.width - bounds.x - GENERAL_PADDING*2;
@@ -169,7 +170,7 @@ void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton 
   while (last_i < games.count) {
     float row_width = 0;
     size_t row_sz = 0;
-    memset(row, 0, sizeof(row));
+    memset(row, 0, sizeof(GameButton*)*games.count);
 
     for (size_t i = last_i; i < games.count; ++i) {
       if (row_sz == 0) {
@@ -184,7 +185,7 @@ void calculate_game_buttons_positions(Rectangle bounds, Games games, GameButton 
       row_width = alusive_width;
     }
 
-    float x = bounds.x + GENERAL_PADDING + (bounds_width/2.0 - row_width/2.0);
+    float x = bounds.x + GENERAL_PADDING + (bounds_width/2.0f - row_width/2.0f);
     for (size_t i = 0; i < row_sz; ++i) {
       row[i]->x = x;
       row[i]->y = y;
@@ -297,7 +298,7 @@ int main(int argc, const char **argv) {
     };
     DrawRectangleRec(bounds, RGB(16, 16, 16));
 
-    GameButton buttons[games.count];
+    GameButton *buttons = nob_temp_alloc(sizeof(GameButton)*games.count);
 
     calculate_game_buttons_positions(bounds, games, buttons);
 

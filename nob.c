@@ -1,3 +1,8 @@
+
+#if defined(_MSC_VER) && !defined(__clang__)
+#    define nob_cc_flags(cmd) nob_cmd_append(cmd, "/W4", "/nologo", "/wd4244", "/wd4819", "/D_CRT_NONSTDC_NO_WARNINGS")
+#endif // nob_cc_output
+
 #define NOB_IMPLEMENTATION
 #define NOB_STRIP_PREFIX
 #include "nob.h"
@@ -64,6 +69,7 @@ int main(int argc, char **argv) {
     #ifdef _WIN32
     nob_cc_inputs(&cmd, "./lib/raylib-5.5/win32-msvc16/raylib.lib");
     nob_cc_inputs(&cmd, "opengl32.lib", "msvcrt.lib", "kernel32.lib", "user32.lib", "winmm.lib", "gdi32.lib", "shell32.lib");
+    cmd_append(&cmd, "/link", "/NODEFAULTLIB:LIBCMT");
     #else
     nob_cc_inputs(&cmd, "./lib/raylib-5.5/linux-amd64/libraylib.a");
     cmd_append(&cmd, "-lm");

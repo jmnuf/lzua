@@ -1,6 +1,9 @@
 
 #if defined(_MSC_VER) && !defined(__clang__)
 #    define nob_cc_flags(cmd) nob_cmd_append(cmd, "/W4", "/nologo", "/wd4244", "/wd4819", "/D_CRT_NONSTDC_NO_WARNINGS")
+#    define cc_debug(cmd) nob_cmd_append(cmd, "/Od", "/Ob1", "/DEBUG", "/Zi", "/DBUILD_DEBUG=1")
+#else
+#    define cc_debug(cmd) nob_cmd_append(cmd, "-O0", "-ggdb", "-DBUILD_DEBUG=1")
 #endif // nob_cc_output
 
 #define NOB_IMPLEMENTATION
@@ -18,9 +21,13 @@
 #define streq(a, b) (strcmp(a, b) == 0)
 
 void usage(const char *program) {
-  printf("Usage: %s [run|build]\n", program);
-  printf("    run        ---        Execute program after compiling\n", program);
-  printf("    build      ---        Force building of program\n", program);
+  printf("Usage: %s [run|build] [FLAGS]\n", program);
+  printf("Commands\n");
+  printf("    run        ---        Execute program after compiling\n");
+  printf("    build      ---        Force building of program\n");
+  printf("Flags\n");
+  printf("    -def <dir> ---        Build program with a default search path for apps\n");
+  printf("    -debug     ---        Include debug data in rebuild\n");
 }
 
 int main(int argc, char **argv) {
@@ -29,6 +36,7 @@ int main(int argc, char **argv) {
   const char *program_name = shift(argv, argc);
   bool run_requested = false;
   bool build_demanded = false;
+  bool include_debug = false;
   const char *default_dir = NULL;
   while (argc > 0) {
     const char *arg = shift(argv, argc);
@@ -36,6 +44,11 @@ int main(int argc, char **argv) {
     if (streq(arg, "-def")) {
       default_dir = shift(argv, argc);
       build_demanded = true;
+      continue;
+    }
+
+    if (streq(arg, "-dbg")) {
+      include_debug = true;
       continue;
     }
 
@@ -66,6 +79,7 @@ int main(int argc, char **argv) {
       cmd_append(&cmd, temp_sprintf("-DDEFAULT_DIRECTORY=\"%s\"", default_dir));
     }
     cmd_append(&cmd, CC_INCLUDE_FLAG"./lib/raylib-5.5/include/");
+    if (include_debug) cc_debug(&cmd);
     #ifdef _WIN32
     nob_cc_inputs(&cmd, "./lib/raylib-5.5/win32-msvc16/raylib.lib");
     nob_cc_inputs(&cmd, "opengl32.lib", "msvcrt.lib", "kernel32.lib", "user32.lib", "winmm.lib", "gdi32.lib", "shell32.lib");
